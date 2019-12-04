@@ -1,0 +1,75 @@
+apply plugin: 'kotlin'
+apply plugin: 'maven'
+apply plugin: 'jacoco'
+apply plugin: 'pmd'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.squareup:kotlinpoet:1.3.0'
+    implementation project(path: ':kokain-core-api')
+    implementation 'org.apache.commons:commons-lang3:3.4'
+    testImplementation 'com.google.testing.compile:compile-testing:0.11'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'com.google.truth:truth:1.0'
+    testImplementation 'com.github.tschuchortdev:kotlin-compile-testing:1.2.4'
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+    kapt "com.google.auto.service:auto-service:1.0-rc6"
+    implementation "com.google.auto.service:auto-service:1.0-rc6"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+}
+
+targetCompatibility = '1.7'
+sourceCompatibility = '1.7'
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+jacocoTestReport {
+    group 'verification'
+    dependsOn 'test'
+
+    reports {
+
+        xml.enabled = true
+        html.enabled = false
+    }
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+buildscript {
+    ext.kotlin_version = '1.3.41'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+repositories {
+    mavenCentral()
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+
+
