@@ -5,6 +5,10 @@ import com.squareup.kotlinpoet.FileSpec
 import java.io.IOException
 
 import javax.annotation.processing.Filer
+import javax.tools.Diagnostic
+import javax.tools.JavaFileObject
+
+
 
 class CodeGenerator(private val filer: Filer) {
 
@@ -14,6 +18,22 @@ class CodeGenerator(private val filer: Filer) {
         val fileWithHeader = entityToGenerate.toBuilder().addComment(HEADER).build()
 
         fileWithHeader.writeTo(filer)
+    }
+
+    fun fetchSourcePath(): String {
+        try {
+            val generationForPath = filer.createSourceFile("PathFor" + javaClass.simpleName)
+            val writer = generationForPath.openWriter()
+            val sourcePath = generationForPath.toUri().getPath()
+            writer.close()
+            generationForPath.delete()
+
+            return sourcePath
+        } catch (e: IOException) {
+
+        }
+
+        return ""
     }
 
     companion object {

@@ -1,5 +1,6 @@
 package com.schwarz.kokaindi
 
+import android.app.Application
 import androidx.lifecycle.LifecycleOwner
 import java.lang.Exception
 

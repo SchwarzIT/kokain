@@ -1,4 +1,4 @@
-package com.kaufland;
+package com.schwarz.kokain.processor.util;
 
 
 import com.google.testing.compile.Compilation;

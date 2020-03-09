@@ -1,6 +1,7 @@
 package kaufland.com.demo
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.schwarz.kokaindi.inject
 //import com.schwarz.kokaindi.inject
@@ -18,6 +19,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         title = mFooBean.saysomething()
+        //Log.e("test", test)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        title = mFooBean.saysomething()
     }
 }

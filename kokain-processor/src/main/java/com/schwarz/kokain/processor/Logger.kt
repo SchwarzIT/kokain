@@ -33,6 +33,11 @@ class Logger internal constructor(processingEnv: ProcessingEnvironment) {
         messager.printMessage(Diagnostic.Kind.ERROR, msg, e)
     }
 
+    fun error(msg: String) {
+        hasErrors = true
+        messager.printMessage(Diagnostic.Kind.ERROR, msg)
+    }
+
     fun abortWithError(msg: String, e: Element?, ex: Throwable?) {
         error(msg, e)
         throw RuntimeException(ex)

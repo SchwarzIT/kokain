@@ -4,5 +4,5 @@ import kotlin.reflect.KClass
 
 interface KDiFactory {
 
-    fun createLazy(kClass: KClass<*>) : Any
+    fun createInstance(kClass: KClass<*>) : Any
 }

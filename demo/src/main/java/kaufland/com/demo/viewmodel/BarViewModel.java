@@ -1,9 +1,9 @@
 package kaufland.com.demo.viewmodel;
 
-import com.schwarz.kokain.api.EViewModel;
+import com.schwarz.kokain.api.EFactory;
 
 import androidx.lifecycle.ViewModel;
 
-@EViewModel
+@EFactory
 public class BarViewModel extends ViewModel {
 }

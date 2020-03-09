@@ -1,38 +1,38 @@
 package com.schwarz.kokaindi
 
-import android.app.Activity
-import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
-import com.schwarz.kokaindi.observer.ContextBean
-import java.lang.RuntimeException
+import com.schwarz.kokaindi.observer.RefreshingReadonlyProperty
 
 
-inline fun <reified T> ComponentActivity.inject(
-): Lazy<T> {
+inline fun <reified T : ComponentActivity, reified V : Any> ComponentActivity.inject(
+): RefreshingReadonlyProperty<T, V> {
     KokainInstance.mInstance!!.refreshActivityContext(this)
-    return KokainInstance.mInstance!!.doInject(T::class) as Lazy<T>
+   return RefreshingReadonlyProperty<T, V> { t:T, desc ->
+        KokainInstance.mInstance!!.refreshActivityContext(this)
+       return@RefreshingReadonlyProperty KokainInstance.mInstance!!.create(t,V::class)
+    }
 }
 
-inline fun <reified T> Fragment.inject(
-): Lazy<T> {
+inline fun <reified T : Fragment, reified V:Any> Fragment.inject(
+): RefreshingReadonlyProperty<T, V> {
     KokainInstance.mInstance!!.refreshActivityContext(activity!!)
-    return KokainInstance.mInstance!!.doInject(T::class) as Lazy<T>
+    return RefreshingReadonlyProperty<T, V>{ t:T, desc ->
+        KokainInstance.mInstance!!.refreshActivityContext(activity!!)
+        return@RefreshingReadonlyProperty KokainInstance.mInstance!!.create(t,V::class)
+    }
 }
 
-inline fun <reified T> inject(
-): Lazy<T> {
-    return KokainInstance.mInstance!!.doInject(T::class) as Lazy<T>
+inline fun <reified T : Any, reified V:Any> inject(
+): RefreshingReadonlyProperty<T, V> {
+    return RefreshingReadonlyProperty<T, V> { t:T, desc ->
+        return@RefreshingReadonlyProperty KokainInstance.mInstance!!.create(t, V::class)
+    }
 }
 
 inline fun Any.context(
-): Lazy<Context> {
-    return lazy {
-        if (this is ContextBean) {
-            context
-        }
-        throw RuntimeException()
-    }
+): ActivityContextGuard {
+    return KokainInstance.mInstance!!.mGuard!!
 }
 
 

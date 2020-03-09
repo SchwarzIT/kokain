@@ -1,0 +1,56 @@
+package com.schwarz.kokaindi
+
+import android.app.Activity
+import android.app.Application
+import android.content.Context
+import androidx.activity.ComponentActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleObserver
+import com.schwarz.kokaindi.observer.ActivityRefered
+import java.lang.ref.WeakReference
+import kotlin.properties.Delegates
+import kotlin.reflect.KProperty
+
+class ActivityContextGuard(applicationContext: Application) : LifecycleObserver {
+
+    private var appContext = applicationContext
+
+    private var currentRef : WeakReference<ComponentActivity>? = null
+
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): Context {
+        return if (isReferedByActivity(thisRef)) currentRef?.get() ?: appContext else appContext
+    }
+
+    private fun isReferedByActivity(thisRef: Any?): Boolean {
+        if (thisRef is ActivityRefered) {
+            return thisRef.activityRef?.equals(currentRef?.get()?.toString()) ?: false
+        }
+        if (thisRef is Fragment) {
+            return thisRef.activity?.equals(currentRef?.get()?.toString()) ?: false
+        }
+        if (thisRef is Activity) {
+            return thisRef?.equals(currentRef?.get()?.toString())
+        }
+        return false
+    }
+
+    fun updateRefererer(thisRef: Any?, bean: Any?) {
+        if (bean is ActivityRefered) {
+            if (thisRef is ActivityRefered) {
+                bean.activityRef = thisRef.activityRef
+            } else if (thisRef is Fragment) {
+                bean.activityRef = thisRef.activity?.toString() ?: null
+            }
+            if (thisRef is Activity) {
+                bean.activityRef = thisRef?.toString()
+            }
+        }
+
+
+    }
+
+    fun onNewContext(activity: ComponentActivity) {
+        currentRef?.clear()
+        currentRef = WeakReference<ComponentActivity>(activity)
+    }
+}

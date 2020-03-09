@@ -1,6 +1,6 @@
 package com.schwarz.kokain.processor.util
 
-import com.schwarz.kokain.processor.javaToKotlinType
+
 import com.squareup.kotlinpoet.*
 
 import javax.lang.model.type.TypeMirror
@@ -10,6 +10,10 @@ object TypeUtil {
 
     fun string(): TypeName {
         return ClassName("kotlin", "String")
+    }
+
+    fun nullableString(): TypeName {
+        return string().copy(true)
     }
 
     fun any(): TypeName {
@@ -52,8 +56,12 @@ object TypeUtil {
         return ClassName("kotlin.collections", "ArrayList").parameterizedBy(hashMapStringObject())
     }
 
-    fun mapSupport(): TypeName {
-        return ClassName("kaufland.com.coachbasebinderapi", "MapSupport")
+    fun activityRefered(): TypeName {
+        return ClassName("com.schwarz.kokaindi.observer", "ActivityRefered")
+    }
+
+    fun kdiFactory(): TypeName {
+        return ClassName("com.schwarz.kokaindi", "KDiFactory")
     }
 
     fun getSimpleName(type: TypeMirror): String {
@@ -66,26 +74,26 @@ object TypeUtil {
         return if (lastIndexOf >= 0) type.toString().substring(0, lastIndexOf) else type.toString()
     }
 
-    fun parseMetaType(type: TypeMirror, list: Boolean, subEntity: String?): TypeName {
-
-        val simpleName = if (subEntity != null && subEntity.contains(getSimpleName(type))) subEntity else getSimpleName(type)
-
-        var baseType: TypeName? = null
-
-        if (type.toString().split(".").size == 1) {
-            baseType = type.asTypeName()
-        } else {
-            try {
-                baseType = ClassName(getPackage(type), simpleName)
-            } catch (e: IllegalArgumentException) {
-                baseType = type.asTypeName()
-            }
-        }
-
-        return if (list) {
-            list(baseType!!.javaToKotlinType())
-        } else baseType!!.javaToKotlinType()
-    }
+//    fun parseMetaType(type: TypeMirror, list: Boolean, subEntity: String?): TypeName {
+//
+//        val simpleName = if (subEntity != null && subEntity.contains(getSimpleName(type))) subEntity else getSimpleName(type)
+//
+//        var baseType: TypeName? = null
+//
+//        if (type.toString().split(".").size == 1) {
+//            baseType = type.asTypeName()
+//        } else {
+//            try {
+//                baseType = ClassName(getPackage(type), simpleName)
+//            } catch (e: IllegalArgumentException) {
+//                baseType = type.asTypeName()
+//            }
+//        }
+//
+//        return if (list) {
+//            list(baseType!!.javaToKotlinType())
+//        } else baseType!!.javaToKotlinType()
+//    }
 
     fun classStar(): ParameterizedTypeName {
         return ClassName("kotlin.reflect", "KClass").parameterizedBy(star())
