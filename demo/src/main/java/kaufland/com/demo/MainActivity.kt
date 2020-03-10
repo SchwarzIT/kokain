@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        mFooBean.countUp()
         title = mFooBean.saysomething()
     }
 }
