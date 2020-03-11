@@ -10,7 +10,7 @@ import com.schwarz.kokaindi.inject
 import kaufland.com.demo.bean.FooBean
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
 
     private val mFooBean: FooBean by inject()
 
@@ -20,14 +20,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        title = mFooBean.saysomething()
         btnSwitch.text = "${resources.getString(R.string.switchTo)} ${localClassName}"
         btnSwitch.setOnClickListener {
-            startActivity(Intent(this, MainActivity2::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-
-
-        title = mFooBean.saysomething()
         //Log.e("test", test)
 
     }

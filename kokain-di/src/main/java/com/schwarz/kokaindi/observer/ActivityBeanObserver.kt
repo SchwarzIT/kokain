@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
 
 class ActivityBeanObserver : LifecycleObserver{
 
-    private val mBeans : MutableMap<KClass<*>, Lazy<*>> = HashMap()
+    private val mBeans : MutableMap<KClass<*>, Lazy<*>> = HashMap<KClass<*>, Lazy<*>>()
 
 
     fun registerBean(clazz: KClass<*> ,bean : Lazy<*>){
