@@ -6,7 +6,9 @@ import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
+import com.schwarz.kokain.api.EBean
 import com.schwarz.kokaindi.observer.ActivityRefered
+import com.schwarz.kokaindi.scope.BeanScope
 import java.lang.ref.WeakReference
 import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
@@ -22,6 +24,9 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
     }
 
     private fun isReferedByActivity(thisRef: Any?): Boolean {
+        if(thisRef is BeanScope && thisRef.scope == EBean.Scope.Singleton){
+            return false
+        }
         if (thisRef is ActivityRefered) {
             return thisRef.activityRef?.equals(currentRef?.get()?.toString()) ?: false
         }

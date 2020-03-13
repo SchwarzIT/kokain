@@ -2,9 +2,6 @@ package com.schwarz.kokain.processor.util
 
 import java.util.regex.Pattern
 
-/**
- * Created by sbra0902 on 22.06.17.
- */
 
 object ConversionUtil {
 

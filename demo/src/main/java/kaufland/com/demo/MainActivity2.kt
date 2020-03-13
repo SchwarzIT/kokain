@@ -2,7 +2,6 @@ package kaufland.com.demo
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.schwarz.kokaindi.inject
 //import com.schwarz.kokaindi.inject
@@ -20,7 +19,7 @@ class MainActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        title = mFooBean.saysomething()
+        title = mFooBean.saySomething()
         btnSwitch.text = "${resources.getString(R.string.switchTo)} ${localClassName}"
         btnSwitch.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
@@ -33,6 +32,6 @@ class MainActivity2 : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         mFooBean.countUp()
-        title = mFooBean.saysomething()
+        title = mFooBean.saySomething()
     }
 }

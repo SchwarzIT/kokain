@@ -20,7 +20,7 @@ import javax.lang.model.element.TypeElement
 @SupportedAnnotationTypes("com.schwarz.kokain.api.EBean", "com.schwarz.kokain.api.EFactory")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor::class)
-class CoachBaseBinderProcessor : AbstractProcessor() {
+class KokainProcessor : AbstractProcessor() {
 
     private var mLogger: Logger? = null
 

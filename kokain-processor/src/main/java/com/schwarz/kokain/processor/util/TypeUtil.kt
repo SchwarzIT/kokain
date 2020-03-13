@@ -60,6 +60,18 @@ object TypeUtil {
         return ClassName("com.schwarz.kokaindi.observer", "ActivityRefered")
     }
 
+    fun beanScope(): TypeName {
+        return ClassName("com.schwarz.kokaindi.scope", "BeanScope")
+    }
+
+    fun scope(): TypeName {
+        return ClassName("com.schwarz.kokain.api.EBean", "Scope")
+    }
+
+    fun ebean(): TypeName {
+        return ClassName("com.schwarz.kokain.api", "EBean")
+    }
+
     fun kdiFactory(): TypeName {
         return ClassName("com.schwarz.kokaindi", "KDiFactory")
     }

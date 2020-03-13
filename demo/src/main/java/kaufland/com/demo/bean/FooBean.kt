@@ -1,5 +1,6 @@
 package kaufland.com.demo.bean
 
+import android.app.Activity
 import android.content.Context
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokaindi.context
@@ -12,7 +13,7 @@ open class FooBean {
 
     private val mContext: Context by context()
 
-    private val mFooActivityBean : FooActivityBean by inject()
+    private val mFooSingletonyBean : FooSingletonBean by inject()
 
     var value : Int = 1
 
@@ -20,7 +21,11 @@ open class FooBean {
         this.value = value.plus(1)
     }
 
-    fun saysomething(): String {
+    fun saySomething(): String {
+        if(!(mContext is Activity)){
+            throw RuntimeException("That should not happen in a SingletonBean")
+        }
+
         return "${mContext.getString(R.string.title)} ${value.toString()}"
     }
 }

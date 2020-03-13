@@ -2,25 +2,21 @@ package com.schwarz.kokaindi
 
 import android.app.Application
 import androidx.activity.ComponentActivity
+import com.schwarz.kokaindi.observer.BeanLifecycleCurator
 import kotlin.reflect.KClass
 
 class Kokain(diFactory: KDiFactory, app: Application) {
 
-    private val mDiFactory: KDiFactory = diFactory
+    private val beanLifecycleCurator = BeanLifecycleCurator(diFactory)
 
     private val app: Application = app
-
-    private val mSingletonMap: MutableMap<KClass<*>, Any> = HashMap()
 
     var mGuard = ActivityContextGuard(app)
 
 
     fun <V : Any> create(thisRef: Any, kClass: KClass<*>): V {
-        var bean = if (mSingletonMap.containsKey(kClass)) {
-            mSingletonMap[kClass] as V
-        } else {
-            mDiFactory.createInstance(kClass) as V
-        }
+
+        var bean = beanLifecycleCurator.getInstance(kClass) as V
         mGuard?.updateRefererer(thisRef, bean)
 
         return bean
@@ -40,12 +36,4 @@ class Kokain(diFactory: KDiFactory, app: Application) {
             return Kokain(diFactory, app)
         }
     }
-
-//    private inline val mInstances : HashMap<KClass<*>, Any> = HashMap()
-//
-//    @JvmOverloads
-//    inline fun <reified T> inject(
-//            qualifier: String? = null,
-//            noinline parameters: String? = null
-//    ): Lazy<T> = mInstances.get(T::class) as Lazy<T>
 }

@@ -23,17 +23,19 @@ class FactoryGenerator{
 
         for (bean in beans) {
 
-            if(bean.scope == EBean.Scope.Singleton){
-                builder.addStatement("%1T::class -> %1T()", ClassName(bean.`package`, bean.sourceClazzSimpleName))
-            }else{
-                builder.addStatement("%T::class -> %T()", ClassName(bean.`package`, bean.sourceClazzSimpleName), ClassName(bean.`package`, bean.generatedClazzSimpleName))
-            }
+
+            builder.addStatement("%T::class -> %T(%M)", ClassName(bean.`package`, bean.sourceClazzSimpleName), ClassName(bean.`package`, bean.generatedClazzSimpleName), mapScope(bean.scope))
 
         }
 
         builder.addStatement("else -> throw %T()", ClassName("java.lang", "RuntimeException"))
         builder.endControlFlow()
         return builder.build()
+    }
+
+    private fun mapScope(scope: EBean.Scope): MemberName {
+
+        return MemberName(TypeUtil.scope() as ClassName, scope.toString())
     }
 
 //    class GeneratedFactory : com.schwarz.kokaindi.KDiFactory {

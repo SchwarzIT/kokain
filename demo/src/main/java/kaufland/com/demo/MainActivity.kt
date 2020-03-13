@@ -2,20 +2,17 @@ package kaufland.com.demo
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.schwarz.kokaindi.inject
-//import com.schwarz.kokaindi.inject
-//import com.schwarz.kokain.api.viewmodel
 import kaufland.com.demo.bean.FooBean
+import kaufland.com.demo.bean.FooSingletonBean
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private val mFooBean: FooBean by inject()
 
-//    private val mBarViewModel: BarViewModel by viewmodel(this@MainActivity)
-
+    private val mSingletonBean: FooSingletonBean by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,14 +24,15 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        title = mFooBean.saysomething()
+        title = mFooBean.saySomething()
         //Log.e("test", test)
 
     }
 
     override fun onResume() {
         super.onResume()
+        runningSinceLbl.text = "Running for ${mSingletonBean.calculateRunningTime()}"
         mFooBean.countUp()
-        title = mFooBean.saysomething()
+        title = mFooBean.saySomething()
     }
 }
