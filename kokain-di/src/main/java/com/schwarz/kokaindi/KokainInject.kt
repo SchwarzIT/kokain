@@ -32,7 +32,7 @@ inline fun <reified T : Any, reified V:Any> inject(
 
 inline fun Any.context(
 ): ActivityContextGuard {
-    return KokainInstance.mInstance!!.mGuard!!
+    return KokainInstance.mInstance!!.mGuard
 }
 
 
