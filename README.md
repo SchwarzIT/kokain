@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/SchwarzIT/kokain.svg?branch=master)](https://travis-ci.org/SchwarzIT/kokain)
+
 
 # This Framework is in development state and it's not ready to be used in production
 
@@ -52,4 +54,54 @@ Kokain combines code generation with property delegates, that way things become 
 
 ## Implementation
 
-  
+1. Add it in your root build.gradle at the end of repositories:
+
+```
+ buildscript {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+  }
+  ...
+  allprojects {
+    repositories {
+	maven { url 'https://jitpack.io' }
+    }
+  }
+```
+
+2. Add gradle dependency
+
+```
+  compile 'com.github.SchwarzIT.kokain:kokain-core-api:X.X.X'
+  compile 'com.github.SchwarzIT.kokain:kokain-di:X.X.X'
+  apt 'com.github.SchwarzIT.kokain:kokain-processor:X.X.X'
+```
+
+
+3. Add EBean annotation to your components
+
+```
+ @EBean
+ open class FooBean {
+
+    private val mContext: Context by context()
+
+    private val mFooSingletonyBean : FooSingletonBean by inject()
+    
+ }
+```
+
+4. Add EFactory annotation to your Application and start kokain (GeneratedFactory got automaticaly generated)
+
+```
+@EFactory
+class DemoApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        KokainInstance.start(Kokain.create(GeneratedFactory(), this))
+    }
+}
+```
+
