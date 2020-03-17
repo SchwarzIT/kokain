@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/SchwarzIT/kokain.svg?branch=master)](https://travis-ci.org/SchwarzIT/kokain)
 [![codecov](https://codecov.io/gh/SchwarzIT/kokain/branch/master/graph/badge.svg)](https://codecov.io/gh/SchwarzIT/kokain)
+[![jitpack](https://jitpack.io/v/SchwarzIT/kokain.svg)](https://jitpack.io/#SchwarzIT/kokain)
 
 
 # This Framework is in development state and it's not ready to be used in production
@@ -74,9 +75,9 @@ Kokain combines code generation with property delegates, that way things become 
 2. Add gradle dependency
 
 ```
-  compile 'com.github.SchwarzIT.kokain:kokain-core-api:X.X.X'
-  compile 'com.github.SchwarzIT.kokain:kokain-di:X.X.X'
-  apt 'com.github.SchwarzIT.kokain:kokain-processor:X.X.X'
+  compile 'com.github.SchwarzIT:kokain:0.0.1-alpha01'
+  compile 'com.github.SchwarzIT.kokain:kokain-di:0.0.1-alpha01'
+  apt 'com.github.SchwarzIT.kokain:kokain-processor:0.0.1-alpha01'
 ```
 
 
