@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/SchwarzIT/kokain.svg?branch=master)](https://travis-ci.org/SchwarzIT/kokain)
+[![codecov](https://codecov.io/gh/SchwarzIT/kokain/branch/master/graph/badge.svg)](https://codecov.io/gh/SchwarzIT/kokain)
 
 
 # This Framework is in development state and it's not ready to be used in production
