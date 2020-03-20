@@ -16,9 +16,9 @@ inline fun <reified T : ComponentActivity, reified V : Any> ComponentActivity.in
 
 inline fun <reified T : Fragment, reified V:Any> Fragment.inject(
 ): RefreshingReadonlyProperty<T, V> {
-    KokainInstance.mInstance!!.refreshActivityContext(activity!!)
+    KokainInstance.mInstance!!.refreshActivityContext(activity)
     return RefreshingReadonlyProperty<T, V>{ t:T, desc ->
-        KokainInstance.mInstance!!.refreshActivityContext(activity!!)
+        KokainInstance.mInstance!!.refreshActivityContext(activity)
         return@RefreshingReadonlyProperty KokainInstance.mInstance!!.create(t,V::class)
     }
 }

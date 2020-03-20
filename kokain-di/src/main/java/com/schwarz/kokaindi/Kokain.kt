@@ -27,8 +27,10 @@ class Kokain(diFactory: KDiFactory, app: Application) {
 
     }
 
-    fun refreshActivityContext(activity: ComponentActivity) {
-        mGuard.onNewContext(activity)
+    fun refreshActivityContext(activity: ComponentActivity?) {
+        activity?.let {
+            mGuard.onNewContext(it)
+        }
     }
 
     companion object {

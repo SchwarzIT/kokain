@@ -17,14 +17,14 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
 
     private var appContext = applicationContext
 
-    private var currentRef : WeakReference<ComponentActivity>? = null
+    private var currentRef: WeakReference<ComponentActivity>? = null
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): Context {
         return if (isReferedByActivity(thisRef)) currentRef?.get() ?: appContext else appContext
     }
 
     private fun isReferedByActivity(thisRef: Any?): Boolean {
-        if(thisRef is BeanScope && thisRef.scope == EBean.Scope.Singleton){
+        if (thisRef is BeanScope && thisRef.scope == EBean.Scope.Singleton) {
             return false
         }
         if (thisRef is ActivityRefered) {
@@ -55,7 +55,9 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
     }
 
     fun onNewContext(activity: ComponentActivity) {
-        currentRef?.clear()
-        currentRef = WeakReference<ComponentActivity>(activity)
+        if (currentRef?.get() != activity) {
+            currentRef?.clear()
+            currentRef = WeakReference(activity)
+        }
     }
 }
