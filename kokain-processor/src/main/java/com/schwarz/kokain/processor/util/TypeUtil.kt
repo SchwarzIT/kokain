@@ -73,7 +73,11 @@ object TypeUtil {
     }
 
     fun kdiFactory(): TypeName {
-        return ClassName("com.schwarz.kokaindi", "KDiFactory")
+        return ClassName("com.schwarz.kokain.api", "KDiFactory")
+    }
+
+    fun arrayKdiFactories() : TypeName{
+        return ClassName("kotlin", "Array").parameterizedBy(kdiFactory())
     }
 
     fun getSimpleName(type: TypeMirror): String {
@@ -107,7 +111,12 @@ object TypeUtil {
 //        } else baseType!!.javaToKotlinType()
 //    }
 
+
     fun classStar(): ParameterizedTypeName {
         return ClassName("kotlin.reflect", "KClass").parameterizedBy(star())
+    }
+
+    fun void(): TypeName {
+        return ClassName("java.lang", "Void")
     }
 }
