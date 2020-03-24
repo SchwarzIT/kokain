@@ -75,9 +75,9 @@ Kokain combines code generation with property delegates, that way things become 
 2. Add gradle dependency
 
 ```
-    implementation 'com.github.SchwarzIT.kokain:kokain-core-api:0.0.1-alpha02'
-    implementation 'com.github.SchwarzIT.kokain:kokain-di:0.0.1-alpha02@aar'
-    kapt 'com.github.SchwarzIT.kokain:kokain-processor:0.0.1-alpha02'
+    implementation 'com.github.SchwarzIT.kokain:kokain-core-api:0.0.1-alpha04'
+    implementation 'com.github.SchwarzIT.kokain:kokain-di:0.0.1-alpha04@aar'
+    kapt 'com.github.SchwarzIT.kokain:kokain-processor:0.0.1-alpha04'
 ```
 
 
