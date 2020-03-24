@@ -1,6 +1,5 @@
-package com.schwarz.kokaindi
+package com.schwarz.kokain.di
 
-import android.app.Application
 import androidx.lifecycle.LifecycleOwner
 import java.lang.Exception
 

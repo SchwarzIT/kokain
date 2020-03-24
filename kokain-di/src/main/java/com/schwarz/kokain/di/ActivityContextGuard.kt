@@ -1,4 +1,4 @@
-package com.schwarz.kokaindi
+package com.schwarz.kokain.di
 
 import android.app.Activity
 import android.app.Application
@@ -7,10 +7,9 @@ import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
 import com.schwarz.kokain.api.EBean
-import com.schwarz.kokaindi.observer.ActivityRefered
-import com.schwarz.kokaindi.scope.BeanScope
+import com.schwarz.kokain.di.observer.ActivityRefered
+import com.schwarz.kokain.di.scope.BeanScope
 import java.lang.ref.WeakReference
-import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
 class ActivityContextGuard(applicationContext: Application) : LifecycleObserver {

@@ -1,4 +1,4 @@
-package com.schwarz.kokaindi.scope
+package com.schwarz.kokain.di.scope
 
 import com.schwarz.kokain.api.EBean
 

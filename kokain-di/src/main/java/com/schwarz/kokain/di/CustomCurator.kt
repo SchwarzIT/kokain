@@ -1,4 +1,4 @@
-package com.schwarz.kokaindi
+package com.schwarz.kokain.di
 
 import kotlin.reflect.KClass
 

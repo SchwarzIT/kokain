@@ -1,15 +1,14 @@
-package com.schwarz.kokaindi.observer
+package com.schwarz.kokain.di.observer
 
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.KDiFactory
-import com.schwarz.kokaindi.scope.BeanScope
-import com.schwarz.kokaindi.scope.DefaultScope
-import com.schwarz.kokaindi.scope.KScope
-import com.schwarz.kokaindi.scope.SingletonScope
-import java.lang.RuntimeException
+import com.schwarz.kokain.di.scope.BeanScope
+import com.schwarz.kokain.di.scope.DefaultScope
+import com.schwarz.kokain.di.scope.KScope
+import com.schwarz.kokain.di.scope.SingletonScope
 import kotlin.reflect.KClass
 
 

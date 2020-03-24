@@ -8,6 +8,10 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 
 object TypeUtil {
 
+    const val KOKAIN_DI_BASE_PACKAGE = "com.schwarz.kokain.di"
+
+    const val KOKAIN_API_BASE_PACKAGE = "com.schwarz.kokain.api"
+
     fun string(): TypeName {
         return ClassName("kotlin", "String")
     }
@@ -57,23 +61,23 @@ object TypeUtil {
     }
 
     fun activityRefered(): TypeName {
-        return ClassName("com.schwarz.kokaindi.observer", "ActivityRefered")
+        return ClassName("$KOKAIN_DI_BASE_PACKAGE.observer", "ActivityRefered")
     }
 
     fun beanScope(): TypeName {
-        return ClassName("com.schwarz.kokaindi.scope", "BeanScope")
+        return ClassName("$KOKAIN_DI_BASE_PACKAGE.scope", "BeanScope")
     }
 
     fun scope(): TypeName {
-        return ClassName("com.schwarz.kokain.api.EBean", "Scope")
+        return ClassName("$KOKAIN_API_BASE_PACKAGE.EBean", "Scope")
     }
 
     fun ebean(): TypeName {
-        return ClassName("com.schwarz.kokain.api", "EBean")
+        return ClassName("$KOKAIN_API_BASE_PACKAGE", "EBean")
     }
 
     fun kdiFactory(): TypeName {
-        return ClassName("com.schwarz.kokain.api", "KDiFactory")
+        return ClassName("$KOKAIN_API_BASE_PACKAGE", "KDiFactory")
     }
 
     fun arrayKdiFactories() : TypeName{

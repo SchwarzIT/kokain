@@ -1,8 +1,8 @@
-package com.schwarz.kokaindi
+package com.schwarz.kokain.di
 
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
-import com.schwarz.kokaindi.observer.RefreshingReadonlyProperty
+import com.schwarz.kokain.di.observer.RefreshingReadonlyProperty
 
 
 inline fun <reified T : ComponentActivity, reified V : Any> ComponentActivity.inject(

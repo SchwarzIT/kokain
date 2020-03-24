@@ -1,4 +1,4 @@
-package com.schwarz.kokaindi.observer
+package com.schwarz.kokain.di.observer
 
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty

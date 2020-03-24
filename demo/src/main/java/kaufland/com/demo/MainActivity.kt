@@ -3,7 +3,7 @@ package kaufland.com.demo
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.schwarz.kokaindi.inject
+import com.schwarz.kokain.di.inject
 import kaufland.com.demo.bean.FooBean
 import kaufland.com.demo.bean.FooSingletonBean
 import kotlinx.android.synthetic.main.activity_main.*

@@ -1,4 +1,4 @@
-package com.schwarz.kokaindi.observer
+package com.schwarz.kokain.di.observer
 
 interface ActivityRefered {
 

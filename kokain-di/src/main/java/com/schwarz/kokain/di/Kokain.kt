@@ -1,10 +1,10 @@
-package com.schwarz.kokaindi
+package com.schwarz.kokain.di
 
 import android.app.Application
 import androidx.activity.ComponentActivity
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.KDiFactory
-import com.schwarz.kokaindi.observer.BeanLifecycleCurator
+import com.schwarz.kokain.di.observer.BeanLifecycleCurator
 import java.lang.RuntimeException
 import kotlin.reflect.KClass
 

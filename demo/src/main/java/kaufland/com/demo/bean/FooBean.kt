@@ -3,8 +3,8 @@ package kaufland.com.demo.bean
 import android.app.Activity
 import android.content.Context
 import com.schwarz.kokain.api.EBean
-import com.schwarz.kokaindi.context
-import com.schwarz.kokaindi.inject
+import com.schwarz.kokain.di.context
+import com.schwarz.kokain.di.inject
 import kaufland.com.demo.R
 
 
