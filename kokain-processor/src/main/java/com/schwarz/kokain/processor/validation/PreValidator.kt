@@ -51,7 +51,7 @@ class PreValidator(logger: Logger, types: Types, elements: Elements) {
 
         for (factory in model.additionalFactories) {
 
-            if (!types.isAssignable(factory, elements.getTypeElement("com.schwarz.kokain.api.KDiFactory").asType())) {
+            if (!types.isSameType(factory, elements.getTypeElement("java.lang.Void").asType()) && !types.isAssignable(factory, elements.getTypeElement("com.schwarz.kokain.api.KDiFactory").asType())) {
                 logger.error(EFactory::class.java.simpleName + " additionalFactories have to implement KdiFactory", model.sourceElement)
             }
         }
