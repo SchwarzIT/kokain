@@ -14,9 +14,12 @@ class MainActivity : AppCompatActivity() {
 
     private val mSingletonBean: FooSingletonBean by inject()
 
+    private val mClassFromAnotherLibrary : ClassFromAnotherLibrary by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        mClassFromAnotherLibrary.doSomething()
         btnSwitch.text = "${resources.getString(R.string.switchTo)} ${localClassName}"
         btnSwitch.setOnClickListener {
             startActivity(Intent(this, MainActivity2::class.java))

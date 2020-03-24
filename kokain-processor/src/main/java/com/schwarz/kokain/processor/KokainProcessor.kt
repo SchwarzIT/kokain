@@ -8,13 +8,13 @@ import com.schwarz.kokain.api.EFactory
 import com.schwarz.kokain.processor.generation.FactoryGenerator
 import com.schwarz.kokain.processor.generation.ShadowBeanGenerator
 import com.schwarz.kokain.processor.model.EBeanModel
-import com.squareup.kotlinpoet.FileSpec
-import com.sun.tools.javac.code.Symbol
+import com.schwarz.kokain.processor.model.EFactoryModel
 import java.lang.RuntimeException
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
-import javax.lang.model.element.Element
 import javax.lang.model.element.TypeElement
+import javax.lang.model.util.Elements
+import javax.lang.model.util.Types
 
 
 @SupportedAnnotationTypes("com.schwarz.kokain.api.EBean", "com.schwarz.kokain.api.EFactory")
@@ -22,43 +22,49 @@ import javax.lang.model.element.TypeElement
 @AutoService(Processor::class)
 class KokainProcessor : AbstractProcessor() {
 
-    private var mLogger: Logger? = null
+    private lateinit var mLogger: Logger
 
-    private var mCodeGenerator: CodeGenerator? = null
-
-    private var validator = PreValidator()
+    private lateinit var mCodeGenerator: CodeGenerator
 
     private val shadowBeanGenerator = ShadowBeanGenerator()
 
     private val factoryGenerator = FactoryGenerator()
 
+    private lateinit var elementUtils : Elements
+
+    private lateinit var typeUtils : Types
+
+    private lateinit var validator : PreValidator
 
     @Synchronized
     override fun init(processingEnvironment: ProcessingEnvironment) {
         mLogger = Logger(processingEnvironment)
         mCodeGenerator = CodeGenerator(processingEnvironment.filer)
+        elementUtils = processingEnvironment.elementUtils
+        typeUtils = processingEnvironment.typeUtils
+        validator = PreValidator(mLogger, typeUtils, elementUtils)
         super.init(processingEnvironment)
     }
 
     override fun process(set: Set<TypeElement>, roundEnv: RoundEnvironment): Boolean {
 
-        var beanModel = roundEnv.getElementsAnnotatedWith(EBean::class.java).map { EBeanModel(it.getAnnotation(EBean::class.java).scope ,it)  }
+        var beanModel = roundEnv.getElementsAnnotatedWith(EBean::class.java).map { EBeanModel(it.getAnnotation(EBean::class.java).scope, it) }
 
         var factory = roundEnv.getElementsAnnotatedWith(EFactory::class.java)
 
         //This should not happen but it does :-/
-        if(beanModel.isEmpty()){
+        if (beanModel.isEmpty()) {
             return true
         }
 
-        if(factory.isEmpty()){
+        if (factory.isEmpty()) {
             mLogger!!.error("no factory annotation found")
             throw RuntimeException()
         }
 
         for (bean in beanModel) {
             try {
-                validator.validate(bean.sourceElement!!, mLogger!!)
+                validator.validate(bean.sourceElement!!)
 
                 if (!mLogger!!.hasErrors()) {
                     val entityFile = shadowBeanGenerator.generateModel(bean)
@@ -75,12 +81,15 @@ class KokainProcessor : AbstractProcessor() {
         }
 
 
+        val factoryModel = EFactoryModel(factory.first(), elementUtils!!)
 
+        validator.validateFactory(factoryModel)
 
-        mCodeGenerator!!.generate(factoryGenerator.generateModel((factory.first() as Symbol.ClassSymbol).packge().toString(), beanModel))
+        if (!mLogger!!.hasErrors()) {
+            mCodeGenerator!!.generate(factoryGenerator.generateModel(factoryModel, beanModel))
+        }
         return true // no further processing of this annotation type
     }
-
 
 
 }

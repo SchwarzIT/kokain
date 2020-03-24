@@ -1,17 +1,28 @@
 package com.schwarz.kokain.processor.validation
 
 import com.schwarz.kokain.api.EBean
+import com.schwarz.kokain.api.EFactory
 import com.schwarz.kokain.processor.Logger
+import com.schwarz.kokain.processor.model.EFactoryModel
+import com.schwarz.kokain.processor.util.TypeUtil
 import com.sun.tools.javac.code.Symbol
 import javax.lang.model.element.Element
 import javax.lang.model.element.ElementKind
 import javax.lang.model.element.Modifier
+import javax.lang.model.util.Elements
+import javax.lang.model.util.Types
 
-class PreValidator {
+class PreValidator(logger: Logger, types: Types, elements: Elements) {
+
+    private val logger = logger
+
+    private val types = types
+
+    private val elements = elements
 
 
     @Throws(ClassNotFoundException::class)
-    fun validate(entityElement: Element, logger: Logger) {
+    fun validate(entityElement: Element) {
 
         if (entityElement.modifiers.contains(Modifier.PRIVATE)) {
             logger.error(EBean::class.java.simpleName + " can not be private", entityElement)
@@ -33,5 +44,16 @@ class PreValidator {
         }
 
 
+    }
+
+    @Throws(ClassNotFoundException::class)
+    fun validateFactory(model: EFactoryModel) {
+
+        for (factory in model.additionalFactories) {
+
+            if (!types.isSameType(factory, elements.getTypeElement("java.lang.Void").asType()) && !types.isAssignable(factory, elements.getTypeElement("com.schwarz.kokain.api.KDiFactory").asType())) {
+                logger.error(EFactory::class.java.simpleName + " additionalFactories have to implement KdiFactory", model.sourceElement)
+            }
+        }
     }
 }
