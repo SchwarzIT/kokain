@@ -37,6 +37,7 @@ Property delegates combined with some extension methods makes it easy to handle 
 
 Kokain combines code generation with property delegates, that way things become easier
 
+![Kokain Logo](https://raw.githubusercontent.com/schwarzit/kokain/master/android-robot-jonny-full-200x200.png)
 
 ## Features
 
