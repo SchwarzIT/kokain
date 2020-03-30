@@ -2,8 +2,13 @@
 [![codecov](https://codecov.io/gh/SchwarzIT/kokain/branch/master/graph/badge.svg)](https://codecov.io/gh/SchwarzIT/kokain)
 [![jitpack](https://jitpack.io/v/SchwarzIT/kokain.svg)](https://jitpack.io/#SchwarzIT/kokain)
 
+## Kokain
 
-# This Framework is in development state and it's not ready to be used in production
+![Kokain Logo](https://raw.githubusercontent.com/schwarzit/kokain/master/android-robot-jonny-full-200x200.png)
+
+##### This Framework is in development state and it's not ready to be used in production
+
+
 
 ## Dependency Injection? Why not? It makes things easier, right?
 
@@ -31,13 +36,13 @@ Property delegates combined with some extension methods makes it easy to handle 
 - it's not possible to inject the activity context
 
 
-## What's the result if these approaches decide to make a baby?
+### What's the result if these approaches decide to make a baby?
 
-# KOKAIN
+![Kokain Logo](https://raw.githubusercontent.com/schwarzit/kokain/master/android-robot-jonny-half-200x200.png)
 
-Kokain combines code generation with property delegates, that way things become easier
+### Kokain combines code generation with property delegates, that way things become easier
 
-![Kokain Logo](https://raw.githubusercontent.com/schwarzit/kokain/master/android-robot-jonny-full-200x200.png)
+
 
 ## Features
 
