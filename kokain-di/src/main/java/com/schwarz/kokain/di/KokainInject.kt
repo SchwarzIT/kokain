@@ -51,5 +51,12 @@ inline fun Any.context(
     return KokainInstance.mInstance!!.mGuard
 }
 
+inline fun <reified T : Any, reified V:Any> Any.systemService(
+): RefreshingReadonlyProperty<T, V?> {
+    return RefreshingReadonlyProperty<T, V?> { t:T, desc ->
+        return@RefreshingReadonlyProperty KokainInstance.mInstance?.mGuard?.getValue(t, desc)?.getSystemService(V::class.java)
+    }
+}
+
 
 
