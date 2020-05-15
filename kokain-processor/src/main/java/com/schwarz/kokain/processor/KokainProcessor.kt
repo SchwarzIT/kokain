@@ -9,6 +9,7 @@ import com.schwarz.kokain.processor.generation.FactoryGenerator
 import com.schwarz.kokain.processor.generation.ShadowBeanGenerator
 import com.schwarz.kokain.processor.model.EBeanModel
 import com.schwarz.kokain.processor.model.EFactoryModel
+import com.schwarz.kokain.processor.util.TypeUtil
 import java.lang.RuntimeException
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
@@ -17,7 +18,6 @@ import javax.lang.model.util.Elements
 import javax.lang.model.util.Types
 
 
-@SupportedAnnotationTypes("com.schwarz.kokain.api.EBean", "com.schwarz.kokain.api.EFactory")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor::class)
 class KokainProcessor : AbstractProcessor() {
@@ -48,18 +48,18 @@ class KokainProcessor : AbstractProcessor() {
 
     override fun process(set: Set<TypeElement>, roundEnv: RoundEnvironment): Boolean {
 
+        if(set.isEmpty()){
+            //no annotation we should take care off
+            return false
+        }
+
         var beanModel = roundEnv.getElementsAnnotatedWith(EBean::class.java).map { EBeanModel(it.getAnnotation(EBean::class.java).scope, it) }
 
         var factory = roundEnv.getElementsAnnotatedWith(EFactory::class.java)
 
-        //This should not happen but it does :-/
-        if (beanModel.isEmpty()) {
-            return true
-        }
-
         if (factory.isEmpty()) {
             mLogger!!.error("no factory annotation found")
-            throw RuntimeException()
+            return false
         }
 
         for (bean in beanModel) {
@@ -92,4 +92,7 @@ class KokainProcessor : AbstractProcessor() {
     }
 
 
+    override fun getSupportedAnnotationTypes(): MutableSet<String> {
+        return setOf(EBean::class.java.canonicalName, EFactory::class.java.canonicalName).toMutableSet()
+    }
 }
