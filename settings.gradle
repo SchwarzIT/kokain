@@ -1,1 +1,1 @@
-include ':kokain-core-api', ':kokain-processor', ':demo', ':kokain-di'
+include ':kokain-core-api', ':kokain-processor', ':demo', ':kokain-di', ':demolibrary'
