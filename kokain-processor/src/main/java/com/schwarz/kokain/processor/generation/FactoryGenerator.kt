@@ -45,7 +45,7 @@ class FactoryGenerator {
         builder = builder.beginControlFlow("when(clazz)")
 
         for (bean in beans) {
-            builder.addStatement("%T::class -> return %T(%M)", ClassName(bean.`package`, bean.sourceClazzSimpleName), ClassName(bean.`package`, bean.generatedClazzSimpleName), mapScope(bean.scope))
+            builder.addStatement("%T::class -> return·%T(%M)", ClassName(bean.`package`, bean.sourceClazzSimpleName), ClassName(bean.`package`, bean.generatedClazzSimpleName), mapScope(bean.scope))
         }
 
         builder.endControlFlow()
