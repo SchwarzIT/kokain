@@ -21,7 +21,11 @@ class EBeanModel(scope: EBean.Scope, sourceElement: Element) {
 
     init {
         var meta = sourceElement?.getAnnotation(Metadata::class.java)
-        kotlinClassMetadata = (KotlinClassMetadata.read(KotlinClassHeader(meta.kind, meta.metadataVersion, meta.bytecodeVersion, meta.data1, meta.data2, meta.extraString, meta.packageName, meta.extraInt)) as? KotlinClassMetadata.Class)?.toKmClass()
+        kotlinClassMetadata = if(meta != null){
+            (KotlinClassMetadata.read(KotlinClassHeader(meta.kind, meta.metadataVersion, meta.bytecodeVersion, meta.data1, meta.data2, meta.extraString, meta.packageName, meta.extraInt)) as? KotlinClassMetadata.Class)?.toKmClass()
+        }else{
+            null
+        }
     }
 
     val scope: EBean.Scope = scope
@@ -40,16 +44,16 @@ class EBeanModel(scope: EBean.Scope, sourceElement: Element) {
     val generatedClazzTypeName: TypeName
         get() = ClassName(`package`, generatedClazzSimpleName)
 
-    val classVisibility : KModifier
-    get() {
-        // we are not interested in other visibilities since they're not injectable
-        kotlinClassMetadata?.let {
-            if(Flag.IS_INTERNAL(kotlinClassMetadata?.flags)){
-                return KModifier.INTERNAL
+    val classVisibility: KModifier
+        get() {
+            // we are not interested in other visibilities since they're not injectable
+            kotlinClassMetadata?.let {
+                if (Flag.IS_INTERNAL(kotlinClassMetadata?.flags)) {
+                    return KModifier.INTERNAL
+                }
             }
+            return KModifier.PUBLIC
         }
-        return KModifier.PUBLIC
-    }
 
 
 }
