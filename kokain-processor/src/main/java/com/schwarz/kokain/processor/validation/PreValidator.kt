@@ -3,6 +3,7 @@ package com.schwarz.kokain.processor.validation
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.EFactory
 import com.schwarz.kokain.processor.Logger
+import com.schwarz.kokain.processor.model.EBeanModel
 import com.schwarz.kokain.processor.model.EFactoryModel
 import com.schwarz.kokain.processor.util.TypeUtil
 import com.sun.tools.javac.code.Symbol
@@ -22,10 +23,15 @@ class PreValidator(logger: Logger, types: Types, elements: Elements) {
 
 
     @Throws(ClassNotFoundException::class)
-    fun validate(entityElement: Element) {
+    fun validate(model: EBeanModel) {
+
+        val entityElement = model.sourceElement
 
         if (entityElement.modifiers.contains(Modifier.PRIVATE)) {
             logger.error(EBean::class.java.simpleName + " can not be private", entityElement)
+        }
+        if (entityElement.modifiers.contains(Modifier.PROTECTED)) {
+            logger.error(EBean::class.java.simpleName + " can not be protected", entityElement)
         }
         if (entityElement.modifiers.contains(Modifier.FINAL)) {
             logger.error(EBean::class.java.simpleName + " can not be final", entityElement)
