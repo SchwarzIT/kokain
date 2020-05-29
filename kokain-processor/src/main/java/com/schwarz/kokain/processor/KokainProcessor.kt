@@ -64,7 +64,7 @@ class KokainProcessor : AbstractProcessor() {
 
         for (bean in beanModel) {
             try {
-                validator.validate(bean.sourceElement!!)
+                validator.validate(bean)
 
                 if (!mLogger!!.hasErrors()) {
                     val entityFile = shadowBeanGenerator.generateModel(bean)
@@ -80,6 +80,9 @@ class KokainProcessor : AbstractProcessor() {
 
         }
 
+        if(factory.size > 1){
+            mLogger!!.error("multiple factory annotations in same module are not allowed. ${factory.joinToString { it.simpleName }}", factory.first())
+        }
 
         val factoryModel = EFactoryModel(factory.first(), elementUtils!!)
 
