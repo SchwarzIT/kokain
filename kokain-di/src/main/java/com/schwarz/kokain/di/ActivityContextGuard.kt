@@ -3,6 +3,7 @@ package com.schwarz.kokain.di
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
@@ -35,6 +36,9 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
         if (thisRef is Activity) {
             return thisRef?.equals(currentRef?.get()?.toString())
         }
+        if(thisRef is View){
+            return thisRef?.context?.equals(currentRef?.get()?.toString()) ?: false
+        }
         return false
     }
 
@@ -47,6 +51,9 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
             }
             if (thisRef is Activity) {
                 bean.activityRef = thisRef?.toString()
+            }
+            if(thisRef is View){
+                bean.activityRef = thisRef?.context?.toString()
             }
         }
 
