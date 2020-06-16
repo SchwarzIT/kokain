@@ -81,9 +81,9 @@ Property delegates combined with some extension methods makes it easy to handle 
 2. Add gradle dependency
 
 ```
-    implementation 'com.github.SchwarzIT.kokain:kokain-core-api:0.0.1-alpha04'
-    implementation 'com.github.SchwarzIT.kokain:kokain-di:0.0.1-alpha04@aar'
-    kapt 'com.github.SchwarzIT.kokain:kokain-processor:0.0.1-alpha04'
+    implementation 'com.github.SchwarzIT.kokain:kokain-core-api:${latest_version}'
+    implementation 'com.github.SchwarzIT.kokain:kokain-di:${latest_version}@aar'
+    kapt 'com.github.SchwarzIT.kokain:kokain-processor:${latest_version}'
 ```
 
 
@@ -103,7 +103,7 @@ Property delegates combined with some extension methods makes it easy to handle 
 4. Add EFactory annotation to your Application and start kokain (GeneratedFactory got automaticaly generated)
 
 ```
-@EFactory
+@EFactory(additionalFactories = [com.example.demolibrary.GeneratedFactory::class])
 class DemoApplication : Application() {
 
     override fun onCreate() {
@@ -113,3 +113,31 @@ class DemoApplication : Application() {
 }
 ```
 
+hint: For multimodule projects we need to add the GeneratedFactories for each module via the additionalFactories attribute
+
+5. Usage Overview
+
+```
+@EBean
+class UsageOverview {
+
+    // no difference where the component comes from always use "by inject()"
+    private val mFooBean: FooBean by inject()
+
+    private val mSingletonBean: FooSingletonBean by inject()
+
+    private val mClassFromAnotherLibrary : ClassFromAnotherLibrary by inject()
+
+    // inject all sorts of systemservices
+    private val layoutInflater : LayoutInflater? by systemService()
+
+    //inject context (kokain injects activity context if it's save to do so otherwise it injects application context)
+    private val context : Context by context()
+
+    private fun doSomething(){
+        val bean = get<FooBean>()
+        bean.saySomething()
+    }
+
+}
+```
