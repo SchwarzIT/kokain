@@ -81,9 +81,23 @@ Property delegates combined with some extension methods makes it easy to handle 
 2. Add gradle dependency
 
 ```
+    apply plugin: 'kotlin-allopen'
+    
+    .
+    .
+    .
+    
     implementation 'com.github.SchwarzIT.kokain:kokain-core-api:${latest_version}'
     implementation 'com.github.SchwarzIT.kokain:kokain-di:${latest_version}@aar'
     kapt 'com.github.SchwarzIT.kokain:kokain-processor:${latest_version}'
+    
+    .
+    .
+    .
+    
+    allOpen {
+       annotation("com.schwarz.kokain.api.EBean")
+    }
 ```
 
 
