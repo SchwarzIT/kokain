@@ -13,6 +13,13 @@
         app:layout_constraintBottom_toTopOf="@+id/btnSwitch"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <kaufland.com.demo.CustomView
+        android:id="@+id/customView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/runningSinceLbl" />
+
     <Button
         android:id="@+id/btnSwitch"
         android:layout_width="match_parent"

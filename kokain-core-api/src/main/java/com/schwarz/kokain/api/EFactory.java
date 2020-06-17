@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 import kotlin.reflect.KClass;
 
 
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 public @interface EFactory {
 

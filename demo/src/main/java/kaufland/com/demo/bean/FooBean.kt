@@ -11,7 +11,7 @@ import kaufland.com.demo.R
 
 
 @EBean
-open class FooBean {
+open class FooBean : FooBeanInterface{
 
     private val mContext: Context by context()
 
@@ -25,7 +25,7 @@ open class FooBean {
         this.value = value.plus(1)
     }
 
-    fun saySomething(): String {
+    override fun saySomething(): String {
         vibrator?.vibrate(100)
         if(!(mContext is Activity)){
             throw RuntimeException("That should not happen in a SingletonBean")
