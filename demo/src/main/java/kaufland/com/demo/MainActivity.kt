@@ -5,12 +5,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.schwarz.kokain.di.inject
 import kaufland.com.demo.bean.FooBean
+import kaufland.com.demo.bean.FooBeanInterface
 import kaufland.com.demo.bean.FooSingletonBean
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private val mFooBean: FooBean by inject()
+
+    private val mFooBeanInterface : FooBeanInterface by inject(FooBean::class)
 
     private val mSingletonBean: FooSingletonBean by inject()
 
@@ -27,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        title = mFooBean.saySomething()
+        title = mFooBeanInterface.saySomething()
         //Log.e("test", test)
 
     }
@@ -37,5 +40,6 @@ class MainActivity : AppCompatActivity() {
         runningSinceLbl.text = "Running for ${mSingletonBean.calculateRunningTime()}"
         mFooBean.countUp()
         title = mFooBean.saySomething()
+        customView.doTest()
     }
 }
