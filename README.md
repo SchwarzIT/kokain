@@ -105,11 +105,15 @@ Property delegates combined with some extension methods makes it easy to handle 
 
 ```
  @EBean
- open class FooBean {
+ open class FooBean : FooBeanInterface {
 
     private val mContext: Context by context()
 
     private val mFooSingletonyBean : FooSingletonBean by inject()
+    
+    override fun saySomething(): String {
+    	return "something"
+    }
     
  }
 ```
@@ -141,6 +145,9 @@ class UsageOverview {
     private val mSingletonBean: FooSingletonBean by inject()
 
     private val mClassFromAnotherLibrary : ClassFromAnotherLibrary by inject()
+    
+    // inject as Interface
+    private val mFooBeanInterface : FooBeanInterface by inject(FooBean::class)
 
     // inject all sorts of systemservices
     private val layoutInflater : LayoutInflater? by systemService()
