@@ -1,13 +1,10 @@
-package com.kaufland.generation
+package com.schwarz.kokain.processor.generation
 
 import com.squareup.kotlinpoet.FileSpec
 
 import java.io.IOException
 
 import javax.annotation.processing.Filer
-import javax.tools.Diagnostic
-import javax.tools.JavaFileObject
-
 
 
 class CodeGenerator(private val filer: Filer) {
