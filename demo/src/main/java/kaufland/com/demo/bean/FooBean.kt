@@ -28,7 +28,7 @@ open class FooBean : FooBeanInterface{
     override fun saySomething(): String {
         vibrator?.vibrate(100)
         if(!(mContext is Activity)){
-            throw RuntimeException("That should not happen in a SingletonBean")
+            throw RuntimeException("That should not happen in a non SingletonBean which is ui related")
         }
 
         return "${mContext.getString(R.string.title)} ${value.toString()}"
