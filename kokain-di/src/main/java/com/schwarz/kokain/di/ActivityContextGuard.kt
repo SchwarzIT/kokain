@@ -3,10 +3,13 @@ package com.schwarz.kokain.di
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.di.observer.ActivityRefered
 import com.schwarz.kokain.di.scope.BeanScope
@@ -17,29 +20,55 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
 
     private var appContext = applicationContext
 
-    private var currentRef: WeakReference<ComponentActivity>? = null
+    private var activityRefs: HashMap<String, ActivityGuard> = HashMap()
 
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): Context {
-        return if (isReferedByActivity(thisRef)) currentRef?.get() ?: appContext else appContext
+    private class ActivityGuard(activity: ComponentActivity, val map: HashMap<String, ActivityGuard>) : LifecycleObserver {
+
+        private val reference = activity.toString()
+
+        private var currentRef: WeakReference<ComponentActivity> = WeakReference(activity)
+
+        init {
+            activity.lifecycle.addObserver(this)
+            if(activity.lifecycle.currentState != Lifecycle.State.DESTROYED){
+                map[reference] = this
+            }
+        }
+
+        fun isSame(activity: ComponentActivity) : Boolean{
+           return currentRef.get() == activity
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        fun onDestroy(){
+            currentRef.clear()
+            map.remove(reference)?.onDestroy()
+        }
+
+        fun getRef(): Context? {
+            return currentRef?.get()
+        }
+
     }
 
-    private fun isReferedByActivity(thisRef: Any?): Boolean {
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): Context {
+        return findReferredGuard(thisRef)?.getRef() ?: appContext
+    }
+
+    private fun findReferredGuard(thisRef: Any?): ActivityGuard?{
         if (thisRef is BeanScope && thisRef.scope == EBean.Scope.Singleton) {
-            return false
+            return null
         }
-        if (thisRef is ActivityRefered) {
-            return thisRef.activityRef?.equals(currentRef?.get()?.toString()) ?: false
+
+        val ref : String? = when(thisRef){
+            is ActivityRefered -> thisRef.activityRef
+            is Fragment -> thisRef.activity?.toString()
+            is Activity -> thisRef?.toString()
+            is View -> thisRef.context?.toString()
+            else -> null
         }
-        if (thisRef is Fragment) {
-            return thisRef.activity?.equals(currentRef?.get()?.toString()) ?: false
-        }
-        if (thisRef is Activity) {
-            return thisRef?.equals(currentRef?.get()?.toString())
-        }
-        if(thisRef is View){
-            return thisRef?.context?.equals(currentRef?.get()?.toString()) ?: false
-        }
-        return false
+
+        return activityRefs[ref]
     }
 
     fun updateRefererer(thisRef: Any?, bean: Any?) {
@@ -61,9 +90,10 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
     }
 
     fun onNewContext(activity: ComponentActivity) {
-        if (currentRef?.get() != activity) {
-            currentRef?.clear()
-            currentRef = WeakReference(activity)
+
+        if(activityRefs[activity.toString()]?.isSame(activity) == true){
+            return
         }
+        ActivityGuard(activity, activityRefs)
     }
 }
