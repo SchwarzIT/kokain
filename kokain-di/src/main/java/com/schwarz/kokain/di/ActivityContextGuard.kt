@@ -29,9 +29,11 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
         private var currentRef: WeakReference<ComponentActivity> = WeakReference(activity)
 
         init {
-            activity.lifecycle.addObserver(this)
             if(activity.lifecycle.currentState != Lifecycle.State.DESTROYED){
+                activity.lifecycle.addObserver(this)
                 map[reference] = this
+            }else{
+                currentRef.clear()
             }
         }
 
