@@ -3,7 +3,6 @@ package com.schwarz.kokain.di
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
@@ -11,8 +10,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.schwarz.kokain.api.EBean
-import com.schwarz.kokain.di.observer.ActivityRefered
-import com.schwarz.kokain.di.scope.BeanScope
+import com.schwarz.kokain.api.internal.ActivityRefered
+import com.schwarz.kokain.api.internal.BeanScope
 import java.lang.ref.WeakReference
 import kotlin.reflect.KProperty
 
