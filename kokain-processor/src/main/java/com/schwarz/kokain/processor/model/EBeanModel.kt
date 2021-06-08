@@ -4,16 +4,12 @@ import com.schwarz.kokain.api.EBean
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.TypeName
-import com.sun.org.apache.xpath.internal.operations.Mod
 import com.sun.tools.javac.code.Symbol
 import kotlinx.metadata.Flag
-import kotlinx.metadata.Flags
 import kotlinx.metadata.KmClass
 import kotlinx.metadata.jvm.KotlinClassHeader
 import kotlinx.metadata.jvm.KotlinClassMetadata
-import sun.tools.util.ModifierFilter
 import javax.lang.model.element.Element
-import javax.lang.model.element.Modifier
 
 class EBeanModel(scope: EBean.Scope, sourceElement: Element) {
 
@@ -22,7 +18,7 @@ class EBeanModel(scope: EBean.Scope, sourceElement: Element) {
     init {
         var meta = sourceElement?.getAnnotation(Metadata::class.java)
         kotlinClassMetadata = if(meta != null){
-            (KotlinClassMetadata.read(KotlinClassHeader(meta.kind, meta.metadataVersion, meta.bytecodeVersion, meta.data1, meta.data2, meta.extraString, meta.packageName, meta.extraInt)) as? KotlinClassMetadata.Class)?.toKmClass()
+            (KotlinClassMetadata.read(KotlinClassHeader(meta.kind, meta.metadataVersion, meta.data1, meta.data2, meta.extraString, meta.packageName, meta.extraInt)) as? KotlinClassMetadata.Class)?.toKmClass()
         }else{
             null
         }
