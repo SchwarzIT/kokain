@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.KDiFactory
+import com.schwarz.kokain.api.internal.BeanScope
 import com.schwarz.kokain.di.scope.*
 import kotlin.reflect.KClass
 

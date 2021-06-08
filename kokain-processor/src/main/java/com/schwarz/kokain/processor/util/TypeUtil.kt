@@ -8,8 +8,6 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 
 object TypeUtil {
 
-    const val KOKAIN_DI_BASE_PACKAGE = "com.schwarz.kokain.di"
-
     const val KOKAIN_API_BASE_PACKAGE = "com.schwarz.kokain.api"
 
     fun string(): TypeName {
@@ -61,11 +59,11 @@ object TypeUtil {
     }
 
     fun activityRefered(): TypeName {
-        return ClassName("$KOKAIN_DI_BASE_PACKAGE.observer", "ActivityRefered")
+        return ClassName("$KOKAIN_API_BASE_PACKAGE.internal", "ActivityRefered")
     }
 
     fun beanScope(): TypeName {
-        return ClassName("$KOKAIN_DI_BASE_PACKAGE.scope", "BeanScope")
+        return ClassName("$KOKAIN_API_BASE_PACKAGE.internal", "BeanScope")
     }
 
     fun scope(): TypeName {
@@ -93,28 +91,6 @@ object TypeUtil {
         val lastIndexOf = type.toString().lastIndexOf(".")
         return if (lastIndexOf >= 0) type.toString().substring(0, lastIndexOf) else type.toString()
     }
-
-//    fun parseMetaType(type: TypeMirror, list: Boolean, subEntity: String?): TypeName {
-//
-//        val simpleName = if (subEntity != null && subEntity.contains(getSimpleName(type))) subEntity else getSimpleName(type)
-//
-//        var baseType: TypeName? = null
-//
-//        if (type.toString().split(".").size == 1) {
-//            baseType = type.asTypeName()
-//        } else {
-//            try {
-//                baseType = ClassName(getPackage(type), simpleName)
-//            } catch (e: IllegalArgumentException) {
-//                baseType = type.asTypeName()
-//            }
-//        }
-//
-//        return if (list) {
-//            list(baseType!!.javaToKotlinType())
-//        } else baseType!!.javaToKotlinType()
-//    }
-
 
     fun classStar(): ParameterizedTypeName {
         return ClassName("kotlin.reflect", "KClass").parameterizedBy(star())
