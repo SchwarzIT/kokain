@@ -4,5 +4,5 @@ import com.schwarz.kokain.api.EBean
 
 interface BeanScope {
 
-    var scope : EBean.Scope
+    var scope: EBean.Scope
 }

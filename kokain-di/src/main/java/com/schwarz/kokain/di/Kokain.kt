@@ -18,17 +18,16 @@ class Kokain(diFactory: KDiFactory, app: Application, customCurator: CustomCurat
 
     var mGuard = ActivityContextGuard(app)
 
-
     fun <V : Any> create(thisRef: Any, clazz: KClass<*>): V {
 
         var bean = beanLifecycleCurator.getInstance(clazz) as V?
-        if(bean == null){
+        if (bean == null) {
             bean = customCurator?.getInstance(clazz)
         }
 
         mGuard?.updateRefererer(thisRef, bean)
 
-        if(bean == null){
+        if (bean == null) {
             throw RuntimeException("not able to get instance of $clazz make sure object annotated with ${EBean::class} or CustomCurator registered")
         }
 
@@ -36,8 +35,6 @@ class Kokain(diFactory: KDiFactory, app: Application, customCurator: CustomCurat
     }
 
     fun close() {
-
-
     }
 
     fun refreshActivityContext(activity: ComponentActivity?) {

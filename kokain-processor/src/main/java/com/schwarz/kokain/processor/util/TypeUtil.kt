@@ -1,10 +1,11 @@
 package com.schwarz.kokain.processor.util
 
-
-import com.squareup.kotlinpoet.*
-
-import javax.lang.model.type.TypeMirror
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.ParameterizedTypeName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.TypeName
+import com.squareup.kotlinpoet.WildcardTypeName
+import javax.lang.model.type.TypeMirror
 
 object TypeUtil {
 
@@ -78,7 +79,7 @@ object TypeUtil {
         return ClassName("$KOKAIN_API_BASE_PACKAGE", "KDiFactory")
     }
 
-    fun arrayKdiFactories() : TypeName{
+    fun arrayKdiFactories(): TypeName {
         return ClassName("kotlin", "Array").parameterizedBy(kdiFactory())
     }
 

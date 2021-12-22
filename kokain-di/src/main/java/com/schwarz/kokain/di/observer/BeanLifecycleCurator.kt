@@ -6,14 +6,11 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.KDiFactory
 import com.schwarz.kokain.api.internal.BeanScope
-import com.schwarz.kokain.di.scope.*
 import kotlin.reflect.KClass
-
 
 class BeanLifecycleCurator(private val factory: KDiFactory) : LifecycleObserver {
 
     private val scopes: Map<EBean.Scope, KScope> = mapOf(Pair(EBean.Scope.Default, DefaultScope()), Pair(EBean.Scope.Singleton, SingletonScope()))
-
 
     fun <V : Any> getInstance(clazz: KClass<*>): V? {
         try {
@@ -38,25 +35,19 @@ class BeanLifecycleCurator(private val factory: KDiFactory) : LifecycleObserver 
         }
     }
 
-
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
-
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
-
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
-
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
-
     }
-
 }

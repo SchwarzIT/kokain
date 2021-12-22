@@ -28,20 +28,20 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
         private var currentRef: WeakReference<ComponentActivity> = WeakReference(activity)
 
         init {
-            if(activity.lifecycle.currentState != Lifecycle.State.DESTROYED){
+            if (activity.lifecycle.currentState != Lifecycle.State.DESTROYED) {
                 activity.lifecycle.addObserver(this)
                 map[reference] = this
-            }else{
+            } else {
                 currentRef.clear()
             }
         }
 
-        fun isSame(activity: ComponentActivity) : Boolean{
-           return currentRef.get() == activity
+        fun isSame(activity: ComponentActivity): Boolean {
+            return currentRef.get() == activity
         }
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-        fun onDestroy(){
+        fun onDestroy() {
             currentRef.clear()
             map.remove(reference)?.onDestroy()
         }
@@ -49,19 +49,18 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
         fun getRef(): Context? {
             return currentRef?.get()
         }
-
     }
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): Context {
         return findReferredGuard(thisRef)?.getRef() ?: appContext
     }
 
-    private fun findReferredGuard(thisRef: Any?): ActivityGuard?{
+    private fun findReferredGuard(thisRef: Any?): ActivityGuard? {
         if (thisRef is BeanScope && thisRef.scope == EBean.Scope.Singleton) {
             return null
         }
 
-        val ref : String? = when(thisRef){
+        val ref: String? = when (thisRef) {
             is ActivityRefered -> thisRef.activityRef
             is Fragment -> thisRef.activity?.toString()
             is Activity -> thisRef?.toString()
@@ -82,17 +81,15 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
             if (thisRef is Activity) {
                 bean.activityRef = thisRef?.toString()
             }
-            if(thisRef is View){
+            if (thisRef is View) {
                 bean.activityRef = thisRef?.context?.toString()
             }
         }
-
-
     }
 
     fun onNewContext(activity: ComponentActivity) {
 
-        if(activityRefs[activity.toString()]?.isSame(activity) == true){
+        if (activityRefs[activity.toString()]?.isSame(activity) == true) {
             return
         }
         ActivityGuard(activity, activityRefs)

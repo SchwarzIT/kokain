@@ -5,21 +5,20 @@ import com.tschuchort.compiletesting.KotlinCompilation
 import com.tschuchort.compiletesting.SourceFile
 import org.junit.Assert
 import org.junit.Test
-import java.io.File
 
 class KokainProcessorKotlinTest {
-
 
     @Test
     fun testKotlinBasicGeneration() {
 
-        val subEntity = SourceFile.kotlin("FooBean.kt",
-                HEADER +
-                        "@EBean\n" +
-                        "@EFactory\n" +
-                        "open class FooBean {\n" +
-                        "}")
-
+        val subEntity = SourceFile.kotlin(
+            "FooBean.kt",
+            HEADER +
+                "@EBean\n" +
+                "@EFactory\n" +
+                "open class FooBean {\n" +
+                "}"
+        )
 
         val compilation = compileKotlin(subEntity)
 
@@ -29,13 +28,14 @@ class KokainProcessorKotlinTest {
     @Test
     fun testKotlinInternalBasicGeneration() {
 
-        val subEntity = SourceFile.kotlin("FooBean.kt",
+        val subEntity = SourceFile.kotlin(
+            "FooBean.kt",
             HEADER +
-                    "@EBean\n" +
-                    "@EFactory\n" +
-                    "open internal class FooBean {\n" +
-                    "}")
-
+                "@EBean\n" +
+                "@EFactory\n" +
+                "open internal class FooBean {\n" +
+                "}"
+        )
 
         val compilation = compileKotlin(subEntity)
 
@@ -56,10 +56,9 @@ class KokainProcessorKotlinTest {
 
     companion object {
         const val HEADER: String =
-                "package com.kaufland.test\n" +
-                        "\n" +
-                        "import com.schwarz.kokain.api.EBean\n" +
-                        "import com.schwarz.kokain.api.EFactory\n"
+            "package com.kaufland.test\n" +
+                "\n" +
+                "import com.schwarz.kokain.api.EBean\n" +
+                "import com.schwarz.kokain.api.EFactory\n"
     }
-
 }

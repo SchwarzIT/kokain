@@ -2,18 +2,16 @@ package com.schwarz.kokain.di.scope
 
 import kotlin.reflect.KClass
 
-class DefaultScope : KScope{
+class DefaultScope : KScope {
 
     override fun registerInstance(kClass: KClass<*>, instance: Any) {
-
     }
 
-    override fun hasInstance(kClass: KClass<*>) : Boolean{
+    override fun hasInstance(kClass: KClass<*>): Boolean {
         return false
     }
 
     override fun <V : Any> getInstance(kClass: KClass<*>): V? {
-       return null
+        return null
     }
-
 }

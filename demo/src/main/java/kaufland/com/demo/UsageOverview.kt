@@ -19,20 +19,19 @@ open class UsageOverview {
 
     private val mSingletonBean: FooSingletonBean by inject()
 
-    private val mClassFromAnotherLibrary : ClassFromAnotherLibrary by inject()
+    private val mClassFromAnotherLibrary: ClassFromAnotherLibrary by inject()
 
     // inject as Interface
-    private val mFooBeanInterface : FooBeanInterface by inject(FooBean::class)
+    private val mFooBeanInterface: FooBeanInterface by inject(FooBean::class)
 
     // inject all sorts systemservices
-    private val layoutInflater : LayoutInflater? by systemService()
+    private val layoutInflater: LayoutInflater? by systemService()
 
-    //inject context (kokain injects activity context if it's save to do so otherwise it injects application context)
-    private val context : Context by context()
+    // inject context (kokain injects activity context if it's save to do so otherwise it injects application context)
+    private val context: Context by context()
 
-    private fun doSomething(){
+    private fun doSomething() {
         val bean = get<FooBean>()
         bean.saySomething()
     }
-
 }

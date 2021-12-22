@@ -7,7 +7,6 @@ object ElementUtil {
 
     fun splitGenericIfNeeded(name: String): List<String> {
 
-
         val result = ArrayList<String>()
         if (name.contains("<")) {
 
@@ -21,7 +20,5 @@ object ElementUtil {
         }
 
         return result
-
     }
-
 }

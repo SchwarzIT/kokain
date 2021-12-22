@@ -7,7 +7,6 @@ import javax.tools.Diagnostic
 
 class Logger internal constructor(processingEnv: ProcessingEnvironment) {
 
-
     private val messager: Messager
 
     private var hasErrors: Boolean = false

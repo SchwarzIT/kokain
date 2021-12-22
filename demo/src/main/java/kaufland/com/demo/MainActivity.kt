@@ -13,26 +13,24 @@ class MainActivity : AppCompatActivity() {
 
     private val mFooBean: FooBean by inject()
 
-    private val mFooBeanInterface : FooBeanInterface by inject(FooBean::class)
+    private val mFooBeanInterface: FooBeanInterface by inject(FooBean::class)
 
     private val mSingletonBean: FooSingletonBean by inject()
 
-    private val mClassFromAnotherLibrary : ClassFromAnotherLibrary by inject()
+    private val mClassFromAnotherLibrary: ClassFromAnotherLibrary by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mClassFromAnotherLibrary.doSomething()
-        btnSwitch.text = "${resources.getString(R.string.switchTo)} ${localClassName}"
+        btnSwitch.text = "${resources.getString(R.string.switchTo)} $localClassName"
         btnSwitch.setOnClickListener {
             startActivity(Intent(this, MainActivity2::class.java))
             finish()
         }
 
-
         title = mFooBeanInterface.saySomething()
-        //Log.e("test", test)
-
+        // Log.e("test", test)
     }
 
     override fun onResume() {

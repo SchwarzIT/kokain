@@ -17,9 +17,9 @@ class EBeanModel(scope: EBean.Scope, sourceElement: Element) {
 
     init {
         var meta = sourceElement?.getAnnotation(Metadata::class.java)
-        kotlinClassMetadata = if(meta != null){
+        kotlinClassMetadata = if (meta != null) {
             (KotlinClassMetadata.read(KotlinClassHeader(meta.kind, meta.metadataVersion, meta.data1, meta.data2, meta.extraString, meta.packageName, meta.extraInt)) as? KotlinClassMetadata.Class)?.toKmClass()
-        }else{
+        } else {
             null
         }
     }
@@ -50,6 +50,4 @@ class EBeanModel(scope: EBean.Scope, sourceElement: Element) {
             }
             return KModifier.PUBLIC
         }
-
-
 }

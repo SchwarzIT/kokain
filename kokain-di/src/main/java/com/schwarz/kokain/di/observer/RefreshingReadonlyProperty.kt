@@ -8,7 +8,7 @@ class RefreshingReadonlyProperty<T, V>(private val initializer: (T, KProperty<*>
     private var value: Any? = null
 
     override fun getValue(thisRef: T, property: KProperty<*>): V {
-        if(value == null){
+        if (value == null) {
             value = initializer(thisRef, property)
         }
         return value as V
