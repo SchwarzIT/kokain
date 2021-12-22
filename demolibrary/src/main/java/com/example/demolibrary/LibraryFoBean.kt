@@ -4,11 +4,10 @@ import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.di.inject
 
 @EBean
-open class LibraryFoBean{
+open class LibraryFoBean {
 
-    private val internalBean : InternalBean by inject()
+    private val internalBean: InternalBean by inject()
 
-    fun doSomething(){
-
+    fun doSomething() {
     }
 }

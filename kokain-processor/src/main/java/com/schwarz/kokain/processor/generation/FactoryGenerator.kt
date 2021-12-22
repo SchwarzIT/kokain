@@ -4,9 +4,16 @@ import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.processor.model.EBeanModel
 import com.schwarz.kokain.processor.model.EFactoryModel
 import com.schwarz.kokain.processor.util.TypeUtil
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.MemberName
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.asTypeName
 import java.lang.StringBuilder
-import java.util.*
+import java.util.StringJoiner
 import kotlin.collections.ArrayList
 
 class FactoryGenerator {
@@ -15,8 +22,8 @@ class FactoryGenerator {
 
     fun generateModel(factory: EFactoryModel, beans: List<EBeanModel>): FileSpec {
         val typeBuilder = TypeSpec.classBuilder("GeneratedFactory").addModifiers(KModifier.PUBLIC).addSuperinterface(TypeUtil.kdiFactory())
-                .addProperty(propAdditionalFactories(factory))
-                .addFunction(create(beans))
+            .addProperty(propAdditionalFactories(factory))
+            .addFunction(create(beans))
 
         return FileSpec.get(factory.`package`, typeBuilder.build())
     }
@@ -79,6 +86,4 @@ class FactoryGenerator {
 //
 //
 //    }
-
-
 }

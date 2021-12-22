@@ -1,20 +1,23 @@
 package com.schwarz.kokain.processor
 
 import com.google.auto.service.AutoService
-import com.schwarz.kokain.processor.generation.CodeGenerator
-import com.schwarz.kokain.processor.validation.PreValidator
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.EFactory
+import com.schwarz.kokain.processor.generation.CodeGenerator
 import com.schwarz.kokain.processor.generation.FactoryGenerator
 import com.schwarz.kokain.processor.generation.ShadowBeanGenerator
 import com.schwarz.kokain.processor.model.EBeanModel
 import com.schwarz.kokain.processor.model.EFactoryModel
-import javax.annotation.processing.*
+import com.schwarz.kokain.processor.validation.PreValidator
+import javax.annotation.processing.AbstractProcessor
+import javax.annotation.processing.ProcessingEnvironment
+import javax.annotation.processing.Processor
+import javax.annotation.processing.RoundEnvironment
+import javax.annotation.processing.SupportedSourceVersion
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 import javax.lang.model.util.Types
-
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor::class)
@@ -28,11 +31,11 @@ class KokainProcessor : AbstractProcessor() {
 
     private val factoryGenerator = FactoryGenerator()
 
-    private lateinit var elementUtils : Elements
+    private lateinit var elementUtils: Elements
 
-    private lateinit var typeUtils : Types
+    private lateinit var typeUtils: Types
 
-    private lateinit var validator : PreValidator
+    private lateinit var validator: PreValidator
 
     @Synchronized
     override fun init(processingEnvironment: ProcessingEnvironment) {
@@ -46,8 +49,8 @@ class KokainProcessor : AbstractProcessor() {
 
     override fun process(set: Set<TypeElement>, roundEnv: RoundEnvironment): Boolean {
 
-        if(set.isEmpty()){
-            //no annotation we should take care off
+        if (set.isEmpty()) {
+            // no annotation we should take care off
             return false
         }
 
@@ -68,17 +71,15 @@ class KokainProcessor : AbstractProcessor() {
                     val entityFile = shadowBeanGenerator.generateModel(bean)
                     mCodeGenerator!!.generate(entityFile)
                 }
-
             } catch (e: ClassNotFoundException) {
                 mLogger!!.abortWithError("Clazz not found", bean.sourceElement, e)
             } catch (e: Exception) {
                 e.printStackTrace()
                 mLogger!!.abortWithError("generation failed", bean.sourceElement, e)
             }
-
         }
 
-        if(factory.size > 1){
+        if (factory.size > 1) {
             mLogger!!.error("multiple factory annotations in same module are not allowed. ${factory.joinToString { it.simpleName }}", factory.first())
         }
 
@@ -91,7 +92,6 @@ class KokainProcessor : AbstractProcessor() {
         }
         return true // no further processing of this annotation type
     }
-
 
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
         return setOf(EBean::class.java.canonicalName, EFactory::class.java.canonicalName).toMutableSet()

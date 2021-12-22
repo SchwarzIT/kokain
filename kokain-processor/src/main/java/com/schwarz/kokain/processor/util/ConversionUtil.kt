@@ -2,7 +2,6 @@ package com.schwarz.kokain.processor.util
 
 import java.util.regex.Pattern
 
-
 object ConversionUtil {
 
     fun convertCamelToUnderscore(words: String): String {

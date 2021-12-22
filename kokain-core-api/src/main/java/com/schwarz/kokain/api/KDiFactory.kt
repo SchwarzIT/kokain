@@ -4,5 +4,5 @@ import kotlin.reflect.KClass
 
 interface KDiFactory {
 
-    fun createInstance(clazz: KClass<*>) : Any?
+    fun createInstance(clazz: KClass<*>): Any?
 }

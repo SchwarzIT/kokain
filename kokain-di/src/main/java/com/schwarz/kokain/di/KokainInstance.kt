@@ -16,8 +16,8 @@ object KokainInstance {
     }
 
     fun activityChanged(lifecycleOwner: LifecycleOwner) {
-        //TODO
-        //lifecycleOwner.lifecycle.addObserver()
+        // TODO
+        // lifecycleOwner.lifecycle.addObserver()
     }
 
     @JvmStatic

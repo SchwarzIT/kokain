@@ -1,6 +1,6 @@
 package com.schwarz.kokain.di.scope
 
-import java.util.*
+import java.util.Collections
 import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.collections.HashMap
@@ -30,5 +30,4 @@ class SingletonScope : KScope, Lockable {
     override fun <V : Any> getInstance(kClass: KClass<*>): V? {
         return mInstances[kClass] as V?
     }
-
 }

@@ -7,7 +7,6 @@ import com.schwarz.kokain.processor.model.EBeanModel
 import com.schwarz.kokain.processor.model.EFactoryModel
 import com.schwarz.kokain.processor.util.TypeUtil
 import com.sun.tools.javac.code.Symbol
-import javax.lang.model.element.Element
 import javax.lang.model.element.ElementKind
 import javax.lang.model.element.Modifier
 import javax.lang.model.util.Elements
@@ -20,7 +19,6 @@ class PreValidator(logger: Logger, types: Types, elements: Elements) {
     private val types = types
 
     private val elements = elements
-
 
     @Throws(ClassNotFoundException::class)
     fun validate(model: EBeanModel) {
@@ -48,8 +46,6 @@ class PreValidator(logger: Logger, types: Types, elements: Elements) {
                 }
             }
         }
-
-
     }
 
     @Throws(ClassNotFoundException::class)
