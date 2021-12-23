@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/SchwarzIT/kokain.svg?branch=master)](https://travis-ci.org/SchwarzIT/kokain)
+![Build Status](https://github.com/SchwarzIT/kokain/actions/workflows/android_pre_hook.yml/badge.svg)
 [![codecov](https://codecov.io/gh/SchwarzIT/kokain/branch/master/graph/badge.svg)](https://codecov.io/gh/SchwarzIT/kokain)
 [![jitpack](https://jitpack.io/v/SchwarzIT/kokain.svg)](https://jitpack.io/#SchwarzIT/kokain)
 
