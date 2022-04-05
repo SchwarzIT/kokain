@@ -12,8 +12,7 @@ class Kokain(diFactory: KDiFactory, app: Application, customCurator: CustomCurat
 
     var mGuard = ActivityContextGuard(app)
 
-
-    override fun onBeanResolved(thisRef: Any?, bean: Any?){
+    override fun onBeanResolved(thisRef: Any?, bean: Any?) {
         mGuard?.updateRefererer(thisRef, bean)
     }
 

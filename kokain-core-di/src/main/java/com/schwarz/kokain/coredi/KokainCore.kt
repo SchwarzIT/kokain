@@ -28,8 +28,7 @@ open class KokainCore(diFactory: KDiFactory, customCurator: CustomCurator? = nul
         return bean
     }
 
-    protected open fun onBeanResolved(thisRef: Any?, bean: Any?){
-
+    protected open fun onBeanResolved(thisRef: Any?, bean: Any?) {
     }
 
     fun close() {

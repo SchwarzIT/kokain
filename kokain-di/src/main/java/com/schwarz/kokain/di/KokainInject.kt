@@ -49,7 +49,7 @@ inline fun <reified T : Any> ComponentActivity.get(
 }
 
 inline fun Any.context(): ActivityContextGuard {
-    return  (KokainInstance.mInstance!! as Kokain).mGuard
+    return (KokainInstance.mInstance!! as Kokain).mGuard
 }
 
 inline fun <reified T : Any, reified V : Any> Any.systemService(): RefreshingReadonlyProperty<T, V?> {
