@@ -1,4 +1,4 @@
-package com.schwarz.kokain.di.scope
+package com.schwarz.kokain.coredi.scope
 
 import java.util.Collections
 import java.util.concurrent.locks.Lock

@@ -1,1 +1,2 @@
 include ':kokain-core-api', ':kokain-processor', ':demo', ':kokain-di', ':demolibrary'
+include ':kokain-core-di'

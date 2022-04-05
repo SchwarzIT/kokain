@@ -1,14 +1,15 @@
-package com.schwarz.kokain.di.observer
+package com.schwarz.kokain.coredi.observer
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.KDiFactory
 import com.schwarz.kokain.api.internal.BeanScope
+import com.schwarz.kokain.coredi.scope.DefaultScope
+import com.schwarz.kokain.coredi.scope.KScope
+import com.schwarz.kokain.coredi.scope.Lockable
+import com.schwarz.kokain.coredi.scope.SingletonScope
 import kotlin.reflect.KClass
 
-class BeanLifecycleCurator(private val factory: KDiFactory) : LifecycleObserver {
+class BeanLifecycleCurator(private val factory: KDiFactory) {
 
     private val scopes: Map<EBean.Scope, KScope> = mapOf(Pair(EBean.Scope.Default, DefaultScope()), Pair(EBean.Scope.Singleton, SingletonScope()))
 
@@ -33,21 +34,5 @@ class BeanLifecycleCurator(private val factory: KDiFactory) : LifecycleObserver 
                 (scope as? Lockable)?.unlock()
             }
         }
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun onCreate() {
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() {
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun onPause() {
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroy() {
     }
 }
