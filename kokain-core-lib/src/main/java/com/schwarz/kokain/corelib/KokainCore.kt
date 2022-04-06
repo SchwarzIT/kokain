@@ -1,12 +1,13 @@
-package com.schwarz.kokain.coredi
+package com.schwarz.kokain.corelib
 
+import com.schwarz.kokain.api.CustomCurator
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.KDiFactory
-import com.schwarz.kokain.coredi.observer.BeanLifecycleCurator
+import com.schwarz.kokain.corelib.observer.BeanLifecycleCurator
 import java.lang.RuntimeException
 import kotlin.reflect.KClass
 
-open class KokainCore(diFactory: KDiFactory, customCurator: CustomCurator? = null) {
+abstract class KokainCore(diFactory: KDiFactory, customCurator: CustomCurator? = null) {
 
     private val beanLifecycleCurator = BeanLifecycleCurator(diFactory)
 
@@ -28,15 +29,8 @@ open class KokainCore(diFactory: KDiFactory, customCurator: CustomCurator? = nul
         return bean
     }
 
-    protected open fun onBeanResolved(thisRef: Any?, bean: Any?) {
-    }
+    abstract fun onBeanResolved(thisRef: Any?, bean: Any?)
 
     fun close() {
-    }
-
-    companion object {
-        fun create(diFactory: KDiFactory, customCurator: CustomCurator? = null): KokainCore {
-            return KokainCore(diFactory, customCurator)
-        }
     }
 }

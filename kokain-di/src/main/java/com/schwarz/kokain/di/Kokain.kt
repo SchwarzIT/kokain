@@ -2,9 +2,9 @@ package com.schwarz.kokain.di
 
 import android.app.Application
 import androidx.activity.ComponentActivity
+import com.schwarz.kokain.api.CustomCurator
 import com.schwarz.kokain.api.KDiFactory
-import com.schwarz.kokain.coredi.CustomCurator
-import com.schwarz.kokain.coredi.KokainCore
+import com.schwarz.kokain.corelib.KokainCore
 
 class Kokain(diFactory: KDiFactory, app: Application, customCurator: CustomCurator? = null) : KokainCore(diFactory, customCurator) {
 

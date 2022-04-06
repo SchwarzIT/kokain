@@ -1,7 +1,7 @@
-package com.schwarz.kokain.coredi
+package com.schwarz.kokain.dijvm
 
-import com.schwarz.kokain.coredi.observer.RefreshingReadonlyProperty
 import kotlin.reflect.KClass
+import com.schwarz.kokain.corelib.observer.RefreshingReadonlyProperty
 
 inline fun <reified T : Any, reified V : Any> Any.inject(
     impl: KClass<V>? = null

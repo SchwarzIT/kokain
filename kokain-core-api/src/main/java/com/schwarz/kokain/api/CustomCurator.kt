@@ -1,4 +1,4 @@
-package com.schwarz.kokain.coredi
+package com.schwarz.kokain.api
 
 import kotlin.reflect.KClass
 

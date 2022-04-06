@@ -1,12 +1,12 @@
-package com.schwarz.kokain.coredi.observer
+package com.schwarz.kokain.corelib.observer
 
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.KDiFactory
 import com.schwarz.kokain.api.internal.BeanScope
-import com.schwarz.kokain.coredi.scope.DefaultScope
-import com.schwarz.kokain.coredi.scope.KScope
-import com.schwarz.kokain.coredi.scope.Lockable
-import com.schwarz.kokain.coredi.scope.SingletonScope
+import com.schwarz.kokain.corelib.scope.DefaultScope
+import com.schwarz.kokain.corelib.scope.KScope
+import com.schwarz.kokain.corelib.scope.Lockable
+import com.schwarz.kokain.corelib.scope.SingletonScope
 import kotlin.reflect.KClass
 
 class BeanLifecycleCurator(private val factory: KDiFactory) {
