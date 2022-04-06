@@ -6,8 +6,6 @@
 
 ![Kokain Logo](https://raw.githubusercontent.com/schwarzit/kokain/master/android-robot-jonny-full-200x200.png)
 
-##### This Framework is in development state and it's not ready to be used in production
-
 
 
 ## Dependency Injection? Why not? It makes things easier, right?
