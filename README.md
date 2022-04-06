@@ -58,6 +58,11 @@ Property delegates combined with some extension methods makes it easy to handle 
 
 * pragmatic api
 
+## Features Android
+
+* inject android context in a lifecycle aware matter
+
+* inject systemservices
 
 
 ## Implementation
@@ -88,6 +93,8 @@ Property delegates combined with some extension methods makes it easy to handle 
     .
     
     implementation 'com.github.SchwarzIT.kokain:kokain-core-api:${latest_version}'
+    implementation 'com.github.SchwarzIT.kokain:kokain-core-lib:${latest_version}'
+    //for non android project use 'com.github.SchwarzIT.kokain:kokain-di-jvm' instead
     implementation 'com.github.SchwarzIT.kokain:kokain-di:${latest_version}@aar'
     kapt 'com.github.SchwarzIT.kokain:kokain-processor:${latest_version}'
     
