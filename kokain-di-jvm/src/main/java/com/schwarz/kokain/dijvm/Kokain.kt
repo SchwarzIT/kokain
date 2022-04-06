@@ -4,7 +4,7 @@ import com.schwarz.kokain.api.CustomCurator
 import com.schwarz.kokain.api.KDiFactory
 import com.schwarz.kokain.corelib.KokainCore
 
-class Kokain(diFactory: KDiFactory, customCurator: CustomCurator? = null) : KokainCore(diFactory, customCurator){
+class Kokain(diFactory: KDiFactory, customCurator: CustomCurator? = null) : KokainCore(diFactory, customCurator) {
 
     companion object {
         fun create(diFactory: KDiFactory, customCurator: CustomCurator? = null): KokainCore {
@@ -13,6 +13,5 @@ class Kokain(diFactory: KDiFactory, customCurator: CustomCurator? = null) : Koka
     }
 
     override fun onBeanResolved(thisRef: Any?, bean: Any?) {
-
     }
 }
