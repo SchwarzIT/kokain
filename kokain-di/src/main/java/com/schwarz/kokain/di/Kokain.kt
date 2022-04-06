@@ -2,39 +2,18 @@ package com.schwarz.kokain.di
 
 import android.app.Application
 import androidx.activity.ComponentActivity
-import com.schwarz.kokain.api.EBean
+import com.schwarz.kokain.api.CustomCurator
 import com.schwarz.kokain.api.KDiFactory
-import com.schwarz.kokain.di.observer.BeanLifecycleCurator
-import java.lang.RuntimeException
-import kotlin.reflect.KClass
+import com.schwarz.kokain.corelib.KokainCore
 
-class Kokain(diFactory: KDiFactory, app: Application, customCurator: CustomCurator? = null) {
-
-    private val beanLifecycleCurator = BeanLifecycleCurator(diFactory)
-
-    private val customCurator = customCurator
+class Kokain(diFactory: KDiFactory, app: Application, customCurator: CustomCurator? = null) : KokainCore(diFactory, customCurator) {
 
     private val app: Application = app
 
     var mGuard = ActivityContextGuard(app)
 
-    fun <V : Any> create(thisRef: Any, clazz: KClass<*>): V {
-
-        var bean = beanLifecycleCurator.getInstance(clazz) as V?
-        if (bean == null) {
-            bean = customCurator?.getInstance(clazz)
-        }
-
+    override fun onBeanResolved(thisRef: Any?, bean: Any?) {
         mGuard?.updateRefererer(thisRef, bean)
-
-        if (bean == null) {
-            throw RuntimeException("not able to get instance of $clazz make sure object annotated with ${EBean::class} or CustomCurator registered")
-        }
-
-        return bean
-    }
-
-    fun close() {
     }
 
     fun refreshActivityContext(activity: ComponentActivity?) {

@@ -1,4 +1,4 @@
-package com.schwarz.kokain.di
+package com.schwarz.kokain.dijvm
 
 import java.lang.Exception
 
