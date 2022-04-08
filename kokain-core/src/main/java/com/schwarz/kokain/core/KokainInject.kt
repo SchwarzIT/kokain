@@ -1,6 +1,6 @@
-package com.schwarz.kokain.dijvm
+package com.schwarz.kokain.core
 
-import com.schwarz.kokain.corelib.observer.RefreshingReadonlyProperty
+import com.schwarz.kokain.core.observer.RefreshingReadonlyProperty
 import kotlin.reflect.KClass
 
 inline fun <reified T : Any, reified V : Any> Any.inject(

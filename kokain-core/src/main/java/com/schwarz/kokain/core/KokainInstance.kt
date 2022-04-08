@@ -1,13 +1,13 @@
-package com.schwarz.kokain.dijvm
+package com.schwarz.kokain.core
 
 import java.lang.Exception
 
 object KokainInstance {
 
-    var mInstance: Kokain? = null
+    var mInstance: KokainCore? = null
 
     @JvmStatic
-    fun start(kokainCore: Kokain) {
+    fun start(kokainCore: KokainCore) {
         if (mInstance != null) {
             throw Exception("Kokain already running")
         }

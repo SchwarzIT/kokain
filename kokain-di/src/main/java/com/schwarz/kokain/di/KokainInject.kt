@@ -2,7 +2,9 @@ package com.schwarz.kokain.di
 
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
-import com.schwarz.kokain.corelib.observer.RefreshingReadonlyProperty
+import com.schwarz.kokain.core.get
+import com.schwarz.kokain.core.inject
+import com.schwarz.kokain.core.observer.RefreshingReadonlyProperty
 import kotlin.reflect.KClass
 
 inline fun <reified T : ComponentActivity, reified V : Any> ComponentActivity.inject(impl: KClass<V>? = null): RefreshingReadonlyProperty<T, V> {
@@ -12,19 +14,15 @@ inline fun <reified T : ComponentActivity, reified V : Any> ComponentActivity.in
     }
 }
 
+// This section just wraps the core api to prevent breaking changes
 inline fun <reified T : Any, reified V : Any> Any.inject(
     impl: KClass<V>? = null
-): RefreshingReadonlyProperty<T, V> {
-    return RefreshingReadonlyProperty<T, V> { t: T, desc ->
-        return@RefreshingReadonlyProperty get(impl)
-    }
-}
+) = inject<T, V>(impl)
 
 inline fun <reified T : Any> Any.get(
     impl: KClass<T>? = null
-): T {
-    return KokainInstance.mInstance!!.create(this, impl ?: T::class)
-}
+) = get(impl)
+// end of section
 
 inline fun <reified T : Fragment, reified V : Any> Fragment.inject(
     impl: KClass<V>? = null

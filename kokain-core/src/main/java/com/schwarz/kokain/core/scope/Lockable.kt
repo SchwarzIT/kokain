@@ -1,4 +1,4 @@
-package com.schwarz.kokain.corelib.scope
+package com.schwarz.kokain.core.scope
 
 interface Lockable {
     fun lock()

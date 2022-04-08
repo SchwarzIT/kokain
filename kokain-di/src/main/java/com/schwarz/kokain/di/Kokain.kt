@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.activity.ComponentActivity
 import com.schwarz.kokain.api.CustomCurator
 import com.schwarz.kokain.api.KDiFactory
-import com.schwarz.kokain.corelib.KokainCore
+import com.schwarz.kokain.core.KokainCore
 
 class Kokain(diFactory: KDiFactory, app: Application, customCurator: CustomCurator? = null) : KokainCore(diFactory, customCurator) {
 

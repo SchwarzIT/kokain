@@ -1,9 +1,9 @@
-package com.schwarz.kokain.corelib
+package com.schwarz.kokain.core
 
 import com.schwarz.kokain.api.CustomCurator
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.KDiFactory
-import com.schwarz.kokain.corelib.observer.BeanLifecycleCurator
+import com.schwarz.kokain.core.observer.BeanLifecycleCurator
 import java.lang.RuntimeException
 import kotlin.reflect.KClass
 
