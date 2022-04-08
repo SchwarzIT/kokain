@@ -6,7 +6,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId = 'com.schwarz.kokain'
-            artifactId = 'kokain-core-lib'
+            artifactId = 'kokain-core'
             version = '0.1'
             from components.java
         }
