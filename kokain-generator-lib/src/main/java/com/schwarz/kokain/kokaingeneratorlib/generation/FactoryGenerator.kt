@@ -1,9 +1,9 @@
-package com.schwarz.kokain.processor.generation
+package com.schwarz.kokain.kokaingeneratorlib.generation
 
 import com.schwarz.kokain.api.EBean
-import com.schwarz.kokain.processor.model.EBeanModel
-import com.schwarz.kokain.processor.model.EFactoryModel
-import com.schwarz.kokain.processor.util.TypeUtil
+import com.schwarz.kokain.kokaingeneratorlib.model.IEBeanModel
+import com.schwarz.kokain.kokaingeneratorlib.model.IEFactoryModel
+import com.schwarz.kokain.kokaingeneratorlib.util.TypeUtil
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
@@ -20,7 +20,7 @@ class FactoryGenerator {
 
     private final val ADDITIONAL_FACTORY_PROPERTY_NAME = "additonalFactories"
 
-    fun generateModel(factory: EFactoryModel, beans: List<EBeanModel>): FileSpec {
+    fun generateModel(factory: IEFactoryModel, beans: List<IEBeanModel>): FileSpec {
         val typeBuilder = TypeSpec.classBuilder("GeneratedFactory").addModifiers(KModifier.PUBLIC).addSuperinterface(TypeUtil.kdiFactory())
             .addProperty(propAdditionalFactories(factory))
             .addFunction(create(beans))
@@ -28,16 +28,16 @@ class FactoryGenerator {
         return FileSpec.get(factory.`package`, typeBuilder.build())
     }
 
-    private fun propAdditionalFactories(factory: EFactoryModel): PropertySpec {
+    private fun propAdditionalFactories(factory: IEFactoryModel): PropertySpec {
 
         val builder = StringBuilder("arrayOf<%T>")
         val types = ArrayList<Any>()
         val joiner = StringJoiner(",", "(", ")")
         types.add(TypeUtil.kdiFactory())
         for (factory in factory.additionalFactories) {
-            if (factory.asTypeName() != TypeUtil.void()) {
+            if (factory != TypeUtil.void()) {
                 joiner.add("%T()")
-                types.add(factory.asTypeName())
+                types.add(factory)
             }
         }
         builder.append(joiner)
@@ -45,7 +45,7 @@ class FactoryGenerator {
         return PropertySpec.builder(ADDITIONAL_FACTORY_PROPERTY_NAME, TypeUtil.arrayKdiFactories()).initializer(builder.toString(), *types.toTypedArray()).build()
     }
 
-    private fun create(beans: List<EBeanModel>): FunSpec {
+    private fun create(beans: List<IEBeanModel>): FunSpec {
 
         var builder = FunSpec.builder("createInstance").addModifiers(KModifier.PUBLIC, KModifier.OVERRIDE).addParameter("clazz", TypeUtil.classStar()).returns(TypeUtil.any().copy(true))
 

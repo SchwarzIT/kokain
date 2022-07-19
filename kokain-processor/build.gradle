@@ -7,9 +7,9 @@ apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.squareup:kotlinpoet:1.6.0'
+    implementation 'com.squareup:kotlinpoet:1.12.0'
     implementation "org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.3.0"
-    implementation project(path: ':kokain-core-api', configuration: 'default')
+    implementation project(path: ':kokain-generator-lib', configuration: 'default')
     implementation 'org.apache.commons:commons-lang3:3.4'
     testImplementation 'junit:junit:4.12'
     testImplementation project(path: ':kokain-core-api', configuration: 'default')

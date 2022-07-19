@@ -1,3 +1,5 @@
 include ':kokain-core-api', ':kokain-processor', ':demo', ':kokain-di', ':demolibrary'
 include ':kokain-core-lib'
 include ':kokain-di-jvm'
+include ':kokain-generator-lib'
+include ':kokain-ksp'

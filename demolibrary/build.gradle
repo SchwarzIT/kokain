@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply plugin: "com.google.devtools.ksp"
 
 android {
     compileSdkVersion 31
@@ -27,6 +28,12 @@ android {
 
 }
 
+kotlin {
+    sourceSets.all {
+        kotlin.srcDir("build/generated/ksp/$name/kotlin")
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -34,7 +41,8 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation project(path: ':kokain-di')
     implementation project(path: ':kokain-core-api')
-    kapt project(path: ':kokain-processor')
+    ksp ksp(project(':kokain-ksp',))
+    //kapt project(path: ':kokain-processor')
     testImplementation 'junit:junit:4.12'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
