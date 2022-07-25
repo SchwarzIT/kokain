@@ -5,7 +5,7 @@ import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.TypeName
 
-interface IEBeanModel{
+interface IEBeanModel {
 
     val scope: EBean.Scope
 

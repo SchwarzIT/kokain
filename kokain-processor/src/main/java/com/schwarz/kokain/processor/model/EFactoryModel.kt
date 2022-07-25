@@ -2,7 +2,6 @@ package com.schwarz.kokain.processor.model
 
 import com.schwarz.kokain.api.EFactory
 import com.schwarz.kokain.kokaingeneratorlib.model.IEFactoryModel
-import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
 import com.sun.tools.javac.code.Symbol
@@ -22,8 +21,6 @@ class EFactoryModel(sourceElement: Element, util: Elements) : IEFactoryModel {
         }
     }
 
-
-
     val sourceElement: Element? = sourceElement
     override val additionalFactories: List<TypeName> = additionalFactoriesTypeMirror.map { it.asTypeName() }.toList()
 
@@ -32,6 +29,4 @@ class EFactoryModel(sourceElement: Element, util: Elements) : IEFactoryModel {
 
     override val `package`: String
         get() = (sourceElement as Symbol.ClassSymbol).packge().toString()
-
-
 }

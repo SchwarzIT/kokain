@@ -15,7 +15,7 @@ import com.schwarz.kokain.ksp.factory.EBeanModelFactory
 import com.schwarz.kokain.ksp.factory.EFactoryModelFactory
 import com.schwarz.kokain.ksp.generation.KokainCodeGenerator
 
-class KokainProcessor(codeGenerator: CodeGenerator, val logger: KSPLogger) : SymbolProcessor{
+class KokainProcessor(codeGenerator: CodeGenerator, val logger: KSPLogger) : SymbolProcessor {
 
     private val shadowBeanGenerator = ShadowBeanGenerator()
 
@@ -24,10 +24,14 @@ class KokainProcessor(codeGenerator: CodeGenerator, val logger: KSPLogger) : Sym
     private val codeGenerator = KokainCodeGenerator(codeGenerator)
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        var beanModel = resolver.getSymbolsWithAnnotation(EBean::class.qualifiedName!!).mapNotNull { EBeanModelFactory.create(logger, it) }.toList()
+        val eBeanModelFactory = EBeanModelFactory(logger, resolver)
+        val eFactoryModelFactory = EFactoryModelFactory(logger, resolver)
+
+        var beanModel = resolver.getSymbolsWithAnnotation(EBean::class.qualifiedName!!)
+            .mapNotNull { eBeanModelFactory.create(it) }.toList()
 
         var factory = resolver.getSymbolsWithAnnotation(EFactory::class.qualifiedName!!).firstOrNull()?.let {
-            EFactoryModelFactory.create(logger, it)
+            eFactoryModelFactory.create(it)
         }
 
         beanModel.forEach {
