@@ -3,9 +3,9 @@ package com.schwarz.kokain.processor
 import com.google.auto.service.AutoService
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.EFactory
+import com.schwarz.kokain.kokaingeneratorlib.generation.FactoryGenerator
+import com.schwarz.kokain.kokaingeneratorlib.generation.ShadowBeanGenerator
 import com.schwarz.kokain.processor.generation.CodeGenerator
-import com.schwarz.kokain.processor.generation.FactoryGenerator
-import com.schwarz.kokain.processor.generation.ShadowBeanGenerator
 import com.schwarz.kokain.processor.model.EBeanModel
 import com.schwarz.kokain.processor.model.EFactoryModel
 import com.schwarz.kokain.processor.validation.PreValidator

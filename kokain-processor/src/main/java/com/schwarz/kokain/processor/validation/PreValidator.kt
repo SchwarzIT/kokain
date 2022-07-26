@@ -2,10 +2,10 @@ package com.schwarz.kokain.processor.validation
 
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.EFactory
+import com.schwarz.kokain.kokaingeneratorlib.util.TypeUtil
 import com.schwarz.kokain.processor.Logger
 import com.schwarz.kokain.processor.model.EBeanModel
 import com.schwarz.kokain.processor.model.EFactoryModel
-import com.schwarz.kokain.processor.util.TypeUtil
 import com.sun.tools.javac.code.Symbol
 import javax.lang.model.element.ElementKind
 import javax.lang.model.element.Modifier
@@ -51,7 +51,7 @@ class PreValidator(logger: Logger, types: Types, elements: Elements) {
     @Throws(ClassNotFoundException::class)
     fun validateFactory(model: EFactoryModel) {
 
-        for (factory in model.additionalFactories) {
+        for (factory in model.additionalFactoriesTypeMirror) {
 
             if (!types.isSameType(factory, elements.getTypeElement("java.lang.Void").asType()) && !types.isAssignable(factory, elements.getTypeElement("${TypeUtil.KOKAIN_API_BASE_PACKAGE}.KDiFactory").asType())) {
                 logger.error(EFactory::class.java.simpleName + " additionalFactories have to implement KdiFactory", model.sourceElement)

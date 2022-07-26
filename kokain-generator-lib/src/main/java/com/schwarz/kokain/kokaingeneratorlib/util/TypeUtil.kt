@@ -1,11 +1,10 @@
-package com.schwarz.kokain.processor.util
+package com.schwarz.kokain.kokaingeneratorlib.util
 
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.ParameterizedTypeName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.WildcardTypeName
-import javax.lang.model.type.TypeMirror
 
 object TypeUtil {
 
@@ -81,16 +80,6 @@ object TypeUtil {
 
     fun arrayKdiFactories(): TypeName {
         return ClassName("kotlin", "Array").parameterizedBy(kdiFactory())
-    }
-
-    fun getSimpleName(type: TypeMirror): String {
-        val parts = type.toString().split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        return if (parts.size > 1) parts[parts.size - 1] else parts[0]
-    }
-
-    fun getPackage(type: TypeMirror): String {
-        val lastIndexOf = type.toString().lastIndexOf(".")
-        return if (lastIndexOf >= 0) type.toString().substring(0, lastIndexOf) else type.toString()
     }
 
     fun classStar(): ParameterizedTypeName {
