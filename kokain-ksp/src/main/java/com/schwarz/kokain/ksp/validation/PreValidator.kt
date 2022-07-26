@@ -64,7 +64,6 @@ class PreValidator(logger: KSPLogger, val resolver: Resolver) {
         additionalFactories.forEach {
 
             val containsKdiFactorySupertype: Boolean = (it.declaration as? KSClassDeclaration)?.let {
-                // This is pretty stupid but the best we can do for now
                 it.superTypes.any { it.toTypeName() == kdiFactoryKsType!!.toTypeName() }
             } == true
 
