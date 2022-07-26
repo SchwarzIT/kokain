@@ -25,32 +25,6 @@ class KokainProcessorKotlinTest {
         Assert.assertEquals(compilation.exitCode, KotlinCompilation.ExitCode.OK)
     }
 
-//    @Test
-//    fun testKotlinMultiFactoryGeneration() {
-//
-//        val factory = SourceFile.kotlin(
-//            "FooBean.kt",
-//            HEADER +
-//                    "@EFactory(additionalFactories = [AdditionalFactory::class])\n" +
-//                    "open class FooBean {\n" +
-//                    "}"
-//        )
-//
-//        val subFactory = SourceFile.kotlin(
-//            "AdditionalFactory.kt",
-//            HEADER +
-//                    "open class AdditionalFactory : KDiFactory {\n" +
-//                    "  override fun createInstance(clazz: KClass<*>): Any? {\n" +
-//                    "        return null\n" +
-//                    "    }" +
-//                    "}"
-//        )
-//
-//        val compilation = compileKotlin(factory, subFactory)
-//
-//        Assert.assertEquals(compilation.exitCode, KotlinCompilation.ExitCode.OK)
-//    }
-
     @Test
     fun testKotlinInternalBasicGeneration() {
 
@@ -71,7 +45,6 @@ class KokainProcessorKotlinTest {
     private fun compileKotlin(vararg sourceFiles: SourceFile): KotlinCompilation.Result {
         return KotlinCompilation().apply {
             sources = sourceFiles.toMutableList()
-
             symbolProcessorProviders = listOf(KokainProcessorProvider())
 
             inheritClassPath = true
