@@ -41,8 +41,8 @@ class EBeanModel(scope: EBean.Scope, sourceElement: Element) : IEBeanModel {
     override val classVisibility: KModifier
         get() {
             // we are not interested in other visibilities since they're not injectable
-            kotlinClassMetadata?.let {
-                if (Flag.IS_INTERNAL(kotlinClassMetadata?.flags)) {
+            kotlinClassMetadata?.flags?.let {
+                if (Flag.IS_INTERNAL(it)) {
                     return KModifier.INTERNAL
                 }
             }
