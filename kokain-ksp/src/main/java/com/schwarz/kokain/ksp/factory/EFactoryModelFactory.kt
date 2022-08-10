@@ -21,10 +21,15 @@ class EFactoryModelFactory(val logger: KSPLogger, resolver: Resolver) {
     fun create(element: KSAnnotated): EFactoryModel? {
         (element as? KSClassDeclaration)?.let {
             if (preValidator.validateFactory(it)) {
-                val additionalFactories = element.getKSAnnotationsByType(EFactory::class)
-                    .first()
-                    .getKSValueArgumentByName("additionalFactories")?.value as List<KSType>
+                val additionalFactoriesValueArgument = element.getKSAnnotationsByType(EFactory::class)
+                    .first().apply {
+                        arguments.forEach {
+                            logger.warn("${it.name!!.asString()} - ${it.name!!.getShortName()} - ${it.value}")
+                        }
+                    }
+                    .getKSValueArgumentByName("additionalFactories")?.value
 
+                val additionalFactories = additionalFactoriesValueArgument as List<KSType>
                 additionalFactories.apply {
                     logger.warn("test....  ${this.map { it.toTypeName().toString() }.joinToString()}")
                 }
