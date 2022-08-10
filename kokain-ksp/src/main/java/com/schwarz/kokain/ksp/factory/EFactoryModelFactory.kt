@@ -27,7 +27,7 @@ class EFactoryModelFactory(val logger: KSPLogger, resolver: Resolver) {
 
                 val simpleName = element.simpleName.asString()
                 val sPackage = element.packageName.asString()
-                return EFactoryModel(additionalFactories.map { it.toTypeName() }, simpleName, sPackage)
+                return EFactoryModel(additionalFactories.map { it.toTypeName() }, simpleName, sPackage, element.containingFile)
             }
         } ?: logger.error("failed to process EFactory annotation not a class file", element)
         return null

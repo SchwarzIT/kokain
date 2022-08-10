@@ -28,7 +28,7 @@ class EBeanModelFactory(val logger: KSPLogger, resolver: Resolver) {
                     Visibility.INTERNAL -> KModifier.INTERNAL
                     else -> KModifier.PUBLIC
                 }
-                return EBeanModel(scope, simpleName, sPackage, visibility)
+                return EBeanModel(scope, simpleName, sPackage, visibility, element.containingFile)
             }
         } ?: logger.error("failed to process EBean annotation not a class file", element)
         return null
