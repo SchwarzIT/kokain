@@ -25,6 +25,9 @@ class EFactoryModelFactory(val logger: KSPLogger, resolver: Resolver) {
                     .first()
                     .getKSValueArgumentByName("additionalFactories")?.value as List<KSType>
 
+                additionalFactories.apply {
+                    logger.warn("test....  ${this.map { it.toTypeName().toString() }.joinToString()}")
+                }
                 val simpleName = element.simpleName.asString()
                 val sPackage = element.packageName.asString()
                 return EFactoryModel(additionalFactories.map { it.toTypeName() }, simpleName, sPackage, element.containingFile)
