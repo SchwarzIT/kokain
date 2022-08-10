@@ -85,7 +85,7 @@ Property delegates combined with some extension methods makes it easy to handle 
 
 ```
     apply plugin: 'kotlin-allopen'
-    
+    apply plugin:"com.google.devtools.ksp"
     .
     .
     .
@@ -94,8 +94,9 @@ Property delegates combined with some extension methods makes it easy to handle 
     implementation 'com.github.SchwarzIT.kokain:kokain-core-lib:${latest_version}'
     //for non android project use 'com.github.SchwarzIT.kokain:kokain-di-jvm' instead
     implementation 'com.github.SchwarzIT.kokain:kokain-di:${latest_version}@aar'
-    kapt 'com.github.SchwarzIT.kokain:kokain-processor:${latest_version}'
-    
+    // kapt plugin is the old fashion way and might be deleted in future releases use ksp plugin instead
+    //kapt 'com.github.SchwarzIT.kokain:kokain-processor:${latest_version}'
+    ksp "com.github.SchwarzIT.kokain:kokain-ksp:${kokain_version}"
     .
     .
     .
