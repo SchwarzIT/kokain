@@ -3,7 +3,6 @@ package kaufland.com.demo
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import androidx.appcompat.widget.AppCompatTextView
 import com.schwarz.kokain.di.inject
 import kaufland.com.demo.bean.FooBean

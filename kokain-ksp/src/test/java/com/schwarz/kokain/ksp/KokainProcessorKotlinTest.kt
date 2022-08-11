@@ -24,7 +24,6 @@ class KokainProcessorKotlinTest {
         Assert.assertEquals(KotlinCompilation.ExitCode.OK, compilation.exitCode)
     }
 
-
     private fun compileKotlin(vararg sourceFiles: SourceFile): KotlinCompilation.Result {
         return KotlinCompilation().apply {
             sources = sourceFiles.toMutableList()
