@@ -13,13 +13,13 @@ import com.schwarz.kokain.ksp.util.getKSValueArgumentByName
 import com.schwarz.kokain.ksp.validation.PreValidator
 import com.squareup.kotlinpoet.ksp.toTypeName
 
-class EFactoryModelFactory(val logger: KSPLogger, resolver: Resolver) {
+class EFactoryModelFactory(private val logger: KSPLogger, resolver: Resolver) {
 
     private val preValidator = PreValidator(logger, resolver)
 
     @OptIn(KspExperimental::class)
     fun create(element: KSAnnotated): EFactoryModel? {
-        (element as? KSClassDeclaration)?.let {
+        (element as? KSClassDeclaration)?.let { it ->
             if (preValidator.validateFactory(it)) {
                 val additionalFactories = element.getKSAnnotationsByType(EFactory::class)
                     .first()
@@ -27,7 +27,11 @@ class EFactoryModelFactory(val logger: KSPLogger, resolver: Resolver) {
 
                 val simpleName = element.simpleName.asString()
                 val sPackage = element.packageName.asString()
-                return EFactoryModel(additionalFactories.map { it.toTypeName() }, simpleName, sPackage)
+                return EFactoryModel(
+                    additionalFactories.map { it.toTypeName() },
+                    simpleName,
+                    sPackage
+                )
             }
         } ?: logger.error("failed to process EFactory annotation not a class file", element)
         return null

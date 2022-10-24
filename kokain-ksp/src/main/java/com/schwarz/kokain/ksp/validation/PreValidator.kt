@@ -15,9 +15,7 @@ import com.schwarz.kokain.ksp.util.getKSAnnotationsByType
 import com.schwarz.kokain.ksp.util.getKSValueArgumentByName
 import com.squareup.kotlinpoet.ksp.toTypeName
 
-class PreValidator(logger: KSPLogger, val resolver: Resolver) {
-
-    private val logger = logger
+class PreValidator(private val logger: KSPLogger, private val resolver: Resolver) {
 
     @Throws(ClassNotFoundException::class)
     fun validateEbean(model: KSClassDeclaration): Boolean {
@@ -56,16 +54,18 @@ class PreValidator(logger: KSPLogger, val resolver: Resolver) {
             .first()
             .getKSValueArgumentByName("additionalFactories")?.value as List<KSType>
 
-        val kdiFactoryKsType = resolver.getKotlinClassByName(KDiFactory::class.qualifiedName!!)?.asType(
-            emptyList()
-        )
+        val kdiFactoryKsType =
+            resolver.getKotlinClassByName(KDiFactory::class.qualifiedName!!)?.asType(
+                emptyList()
+            )
         val voidKsType = resolver.getJavaClassByName("java.lang.Void")?.asType(listOf())
 
         additionalFactories.forEach {
 
-            val containsKdiFactorySupertype: Boolean = (it.declaration as? KSClassDeclaration)?.let {
-                it.superTypes.any { it.toTypeName() == kdiFactoryKsType!!.toTypeName() }
-            } == true
+            val containsKdiFactorySupertype: Boolean =
+                (it.declaration as? KSClassDeclaration)?.let {
+                    it.superTypes.any { it.toTypeName() == kdiFactoryKsType!!.toTypeName() }
+                } == true
 
             if (containsKdiFactorySupertype.not() && it != voidKsType!!) {
                 logger.error(

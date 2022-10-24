@@ -7,7 +7,9 @@ import com.schwarz.kokain.di.inject
 import kaufland.com.demo.bean.FooBean
 import kaufland.com.demo.bean.FooBeanInterface
 import kaufland.com.demo.bean.FooSingletonBean
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.btnSwitch
+import kotlinx.android.synthetic.main.activity_main.customView
+import kotlinx.android.synthetic.main.activity_main.runningSinceLbl
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         title = mFooBeanInterface.saySomething()
-        // Log.e("test", test)
     }
 
     override fun onResume() {

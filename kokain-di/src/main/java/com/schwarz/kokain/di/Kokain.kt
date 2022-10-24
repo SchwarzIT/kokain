@@ -6,24 +6,27 @@ import com.schwarz.kokain.api.CustomCurator
 import com.schwarz.kokain.api.KDiFactory
 import com.schwarz.kokain.corelib.KokainCore
 
-class Kokain(diFactory: KDiFactory, app: Application, customCurator: CustomCurator? = null) : KokainCore(diFactory, customCurator) {
+class Kokain(diFactory: KDiFactory, app: Application, customCurator: CustomCurator? = null) :
+    KokainCore(diFactory, customCurator) {
 
-    private val app: Application = app
-
-    var mGuard = ActivityContextGuard(app)
+    var guard = ActivityContextGuard(app)
 
     override fun onBeanResolved(thisRef: Any?, bean: Any?) {
-        mGuard?.updateRefererer(thisRef, bean)
+        guard.updateRefererer(thisRef, bean)
     }
 
     fun refreshActivityContext(activity: ComponentActivity?) {
         activity?.let {
-            mGuard.onNewContext(it)
+            guard.onNewContext(it)
         }
     }
 
     companion object {
-        fun create(diFactory: KDiFactory, app: Application, customCurator: CustomCurator? = null): Kokain {
+        fun create(
+            diFactory: KDiFactory,
+            app: Application,
+            customCurator: CustomCurator? = null
+        ): Kokain {
             return Kokain(diFactory, app, customCurator)
         }
     }

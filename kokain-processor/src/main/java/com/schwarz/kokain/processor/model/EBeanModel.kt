@@ -14,12 +14,22 @@ import javax.lang.model.element.Element
 
 class EBeanModel(scope: EBean.Scope, sourceElement: Element) : IEBeanModel {
 
-    val kotlinClassMetadata: KmClass?
+    private val kotlinClassMetadata: KmClass?
 
     init {
-        var meta = sourceElement?.getAnnotation(Metadata::class.java)
+        val meta = sourceElement.getAnnotation(Metadata::class.java)
         kotlinClassMetadata = if (meta != null) {
-            (KotlinClassMetadata.read(KotlinClassHeader(meta.kind, meta.metadataVersion, meta.data1, meta.data2, meta.extraString, meta.packageName, meta.extraInt)) as? KotlinClassMetadata.Class)?.toKmClass()
+            (KotlinClassMetadata.read(
+                KotlinClassHeader(
+                    meta.kind,
+                    meta.metadataVersion,
+                    meta.data1,
+                    meta.data2,
+                    meta.extraString,
+                    meta.packageName,
+                    meta.extraInt
+                )
+            ) as? KotlinClassMetadata.Class)?.toKmClass()
         } else {
             null
         }

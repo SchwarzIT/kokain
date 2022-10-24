@@ -12,19 +12,32 @@ import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.ksp.model.EBeanModel
 import com.schwarz.kokain.ksp.validation.PreValidator
 import com.squareup.kotlinpoet.KModifier
+import java.io.File
 
-class EBeanModelFactory(val logger: KSPLogger, resolver: Resolver) {
+class EBeanModelFactory(private val logger: KSPLogger, val resolver: Resolver) {
 
     private val preValidator = PreValidator(logger, resolver)
 
     @OptIn(KspExperimental::class)
     fun create(element: KSAnnotated): EBeanModel? {
+
         (element as? KSClassDeclaration)?.let {
             if (preValidator.validateEbean(it)) {
+
                 val scope = it.getAnnotationsByType(EBean::class).first().scope
                 val simpleName = it.simpleName.asString()
                 val sPackage = it.packageName.asString()
-                val visibility = when (it.getVisibility()) {
+
+                var visibility: KModifier? = null
+                for (f in resolver.getNewFiles()) {
+                    for (l in File(f.filePath).readLines()) {
+                        if (CLASS_IS_INTERNAL_REG_EX.find(l) != null) {
+                            visibility = KModifier.INTERNAL
+                        }
+                    }
+                }
+
+                visibility = visibility ?: when (it.getVisibility()) {
                     Visibility.INTERNAL -> KModifier.INTERNAL
                     else -> KModifier.PUBLIC
                 }
@@ -34,3 +47,6 @@ class EBeanModelFactory(val logger: KSPLogger, resolver: Resolver) {
         return null
     }
 }
+
+private val CLASS_IS_INTERNAL_REG_EX =
+    Regex("\\s*((internal)\\s*(?:data|open|abstract|sealed)?\\s*class\\s+)(\\w+)\\s*([({])?.*")

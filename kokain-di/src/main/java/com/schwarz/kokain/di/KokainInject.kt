@@ -50,11 +50,11 @@ inline fun <reified T : Any> ComponentActivity.get(
 }
 
 inline fun Any.context(): ActivityContextGuard {
-    return KokainInstance.mInstance!!.mGuard
+    return KokainInstance.mInstance!!.guard
 }
 
 inline fun <reified T : Any, reified V : Any> Any.systemService(): RefreshingReadonlyProperty<T, V?> {
     return RefreshingReadonlyProperty<T, V?> { t: T, desc ->
-        return@RefreshingReadonlyProperty KokainInstance.mInstance!!.mGuard?.getValue(t, desc)?.getSystemService(V::class.java)
+        return@RefreshingReadonlyProperty KokainInstance.mInstance!!.guard?.getValue(t, desc)?.getSystemService(V::class.java)
     }
 }

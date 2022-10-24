@@ -11,29 +11,28 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
-import java.lang.StringBuilder
 import java.util.StringJoiner
-import kotlin.collections.ArrayList
+
+private const val ADDITIONAL_FACTORY_PROPERTY_NAME = "additonalFactories"
 
 class FactoryGenerator {
 
-    private final val ADDITIONAL_FACTORY_PROPERTY_NAME = "additonalFactories"
-
     fun generateModel(factory: IEFactoryModel, beans: List<IEBeanModel>): FileSpec {
-        val typeBuilder = TypeSpec.classBuilder("GeneratedFactory").addModifiers(KModifier.PUBLIC).addSuperinterface(TypeUtil.kdiFactory())
+        val typeBuilder = TypeSpec.classBuilder("GeneratedFactory").addModifiers(KModifier.PUBLIC)
+            .addSuperinterface(TypeUtil.kdiFactory())
             .addProperty(propAdditionalFactories(factory))
             .addFunction(create(beans))
 
         return FileSpec.get(factory.`package`, typeBuilder.build())
     }
 
-    private fun propAdditionalFactories(factory: IEFactoryModel): PropertySpec {
+    private fun propAdditionalFactories(factoryModel: IEFactoryModel): PropertySpec {
 
         val builder = StringBuilder("arrayOf<%T>")
         val types = ArrayList<Any>()
         val joiner = StringJoiner(",", "(", ")")
         types.add(TypeUtil.kdiFactory())
-        for (factory in factory.additionalFactories) {
+        for (factory in factoryModel.additionalFactories) {
             if (factory != TypeUtil.void()) {
                 joiner.add("%T()")
                 types.add(factory)
@@ -41,17 +40,25 @@ class FactoryGenerator {
         }
         builder.append(joiner)
 
-        return PropertySpec.builder(ADDITIONAL_FACTORY_PROPERTY_NAME, TypeUtil.arrayKdiFactories()).initializer(builder.toString(), *types.toTypedArray()).build()
+        return PropertySpec.builder(ADDITIONAL_FACTORY_PROPERTY_NAME, TypeUtil.arrayKdiFactories())
+            .initializer(builder.toString(), *types.toTypedArray()).build()
     }
 
     private fun create(beans: List<IEBeanModel>): FunSpec {
 
-        var builder = FunSpec.builder("createInstance").addModifiers(KModifier.PUBLIC, KModifier.OVERRIDE).addParameter("clazz", TypeUtil.classStar()).returns(TypeUtil.any().copy(true))
+        var builder =
+            FunSpec.builder("createInstance").addModifiers(KModifier.PUBLIC, KModifier.OVERRIDE)
+                .addParameter("clazz", TypeUtil.classStar()).returns(TypeUtil.any().copy(true))
 
         builder = builder.beginControlFlow("when(clazz)")
 
         for (bean in beans) {
-            builder.addStatement("%T::class -> return·%T(%M)", ClassName(bean.`package`, bean.sourceClazzSimpleName), ClassName(bean.`package`, bean.generatedClazzSimpleName), mapScope(bean.scope))
+            builder.addStatement(
+                "%T::class -> return·%T(%M)",
+                ClassName(bean.`package`, bean.sourceClazzSimpleName),
+                ClassName(bean.`package`, bean.generatedClazzSimpleName),
+                mapScope(bean.scope)
+            )
         }
 
         builder.endControlFlow()
@@ -69,20 +76,6 @@ class FactoryGenerator {
     }
 
     private fun mapScope(scope: EBean.Scope): MemberName {
-
         return MemberName(TypeUtil.scope() as ClassName, scope.toString())
     }
-
-//    class GeneratedFactory : com.schwarz.kokaindi.KDiFactory {
-//
-//
-//        override fun createLazy(kClass: KClass<*>): Any {
-//            return when (kClass) {
-//                FooBean::class -> GeneratedFooBean()
-//                else -> throw RuntimeException()
-//            }
-//        }
-//
-//
-//    }
 }

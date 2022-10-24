@@ -14,10 +14,10 @@ class KokainProcessorKotlinTest {
         val subEntity = SourceFile.kotlin(
             "FooBean.kt",
             HEADER +
-                "@EBean\n" +
-                "@EFactory\n" +
-                "open class FooBean {\n" +
-                "}"
+                    "@EBean\n" +
+                    "@EFactory\n" +
+                    "open class FooBean {\n" +
+                    "}"
         )
 
         val compilation = compileKotlin(subEntity)
@@ -31,10 +31,10 @@ class KokainProcessorKotlinTest {
         val subEntity = SourceFile.kotlin(
             "FooBean.kt",
             HEADER +
-                "@EBean\n" +
-                "@EFactory\n" +
-                "open internal class FooBean {\n" +
-                "}"
+                    "@EBean\n" +
+                    "@EFactory\n" +
+                    "open internal class FooBean {\n" +
+                    "}"
         )
 
         val compilation = compileKotlin(subEntity)
@@ -57,8 +57,8 @@ class KokainProcessorKotlinTest {
     companion object {
         const val HEADER: String =
             "package com.kaufland.test\n" +
-                "\n" +
-                "import com.schwarz.kokain.api.EBean\n" +
-                "import com.schwarz.kokain.api.EFactory\n"
+                    "\n" +
+                    "import com.schwarz.kokain.api.EBean\n" +
+                    "import com.schwarz.kokain.api.EFactory\n"
     }
 }

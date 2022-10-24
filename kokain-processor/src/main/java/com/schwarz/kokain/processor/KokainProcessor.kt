@@ -54,9 +54,10 @@ class KokainProcessor : AbstractProcessor() {
             return false
         }
 
-        var beanModel = roundEnv.getElementsAnnotatedWith(EBean::class.java).map { EBeanModel(it.getAnnotation(EBean::class.java).scope, it) }
+        val beanModel = roundEnv.getElementsAnnotatedWith(EBean::class.java)
+            .map { EBeanModel(it.getAnnotation(EBean::class.java).scope, it) }
 
-        var factory = roundEnv.getElementsAnnotatedWith(EFactory::class.java)
+        val factory = roundEnv.getElementsAnnotatedWith(EFactory::class.java)
 
         if (factory.isEmpty()) {
             mLogger!!.error("no factory annotation found")
@@ -80,7 +81,10 @@ class KokainProcessor : AbstractProcessor() {
         }
 
         if (factory.size > 1) {
-            mLogger!!.error("multiple factory annotations in same module are not allowed. ${factory.joinToString { it.simpleName }}", factory.first())
+            mLogger!!.error(
+                "multiple factory annotations in same module are not allowed. ${factory.joinToString { it.simpleName }}",
+                factory.first()
+            )
         }
 
         val factoryModel = EFactoryModel(factory.first(), elementUtils!!)
@@ -94,6 +98,9 @@ class KokainProcessor : AbstractProcessor() {
     }
 
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
-        return setOf(EBean::class.java.canonicalName, EFactory::class.java.canonicalName).toMutableSet()
+        return setOf(
+            EBean::class.java.canonicalName,
+            EFactory::class.java.canonicalName
+        ).toMutableSet()
     }
 }

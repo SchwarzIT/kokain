@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.di.context
-import java.lang.RuntimeException
 
 @EBean
 internal class FooInternalBean {
