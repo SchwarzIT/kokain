@@ -61,6 +61,10 @@ class PreValidator(logger: KSPLogger, val resolver: Resolver) {
         )
         val voidKsType = resolver.getJavaClassByName("java.lang.Void")?.asType(listOf())
 
+        if (additionalFactories.isEmpty()) {
+            logger.error("additionalFactories should never be empty this can only happen by a ksp bug. See also https://github.com/google/ksp/issues/888")
+            logger.error("add this annotation to a java class to workaround this issue.", model)
+        }
         additionalFactories.forEach {
 
             val containsKdiFactorySupertype: Boolean = (it.declaration as? KSClassDeclaration)?.let {

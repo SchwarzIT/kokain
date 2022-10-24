@@ -25,9 +25,10 @@ class EFactoryModelFactory(val logger: KSPLogger, resolver: Resolver) {
 
                 val factories = extractTypesNamesFromAdditionalFactoriesField(element.getAnnotationsByType(EFactory::class).first())
 
+                val additionalFactories = additionalFactoriesValueArgument as List<KSType>
                 val simpleName = element.simpleName.asString()
                 val sPackage = element.packageName.asString()
-                return EFactoryModel(factories, simpleName, sPackage)
+                return EFactoryModel(factories, simpleName, sPackage, element.containingFile)
             }
         } ?: logger.error("failed to process EFactory annotation not a class file", element)
         return null
