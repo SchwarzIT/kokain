@@ -21,13 +21,20 @@ class EFactoryModelFactory(val logger: KSPLogger, resolver: Resolver) {
     fun create(element: KSAnnotated): EFactoryModel? {
         (element as? KSClassDeclaration)?.let {
             if (preValidator.validateFactory(it)) {
-                val additionalFactories = element.getKSAnnotationsByType(EFactory::class)
-                    .first()
-                    .getKSValueArgumentByName("additionalFactories")?.value as List<KSType>
+                val additionalFactoriesValueArgument =
+                    element.getKSAnnotationsByType(EFactory::class)
+                        .first()
+                        .getKSValueArgumentByName("additionalFactories")?.value
 
+                val additionalFactories = additionalFactoriesValueArgument as List<KSType>
                 val simpleName = element.simpleName.asString()
                 val sPackage = element.packageName.asString()
-                return EFactoryModel(additionalFactories.map { it.toTypeName() }, simpleName, sPackage)
+                return EFactoryModel(
+                    additionalFactories.map { it.toTypeName() },
+                    simpleName,
+                    sPackage,
+                    element.containingFile
+                )
             }
         } ?: logger.error("failed to process EFactory annotation not a class file", element)
         return null
