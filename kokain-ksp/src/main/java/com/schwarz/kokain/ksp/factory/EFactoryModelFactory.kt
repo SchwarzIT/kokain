@@ -25,7 +25,6 @@ class EFactoryModelFactory(val logger: KSPLogger, resolver: Resolver) {
 
                 val factories = extractTypesNamesFromAdditionalFactoriesField(element.getAnnotationsByType(EFactory::class).first())
 
-                val additionalFactories = additionalFactoriesValueArgument as List<KSType>
                 val simpleName = element.simpleName.asString()
                 val sPackage = element.packageName.asString()
                 return EFactoryModel(factories, simpleName, sPackage, element.containingFile)
