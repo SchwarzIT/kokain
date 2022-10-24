@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: "com.google.devtools.ksp"
+apply plugin: 'kotlin-allopen'
 
 android {
     compileSdkVersion 31
@@ -44,6 +45,10 @@ kotlin {
     sourceSets.all {
         kotlin.srcDir("build/generated/ksp/$name/kotlin")
     }
+}
+
+allOpen {
+    annotation("com.schwarz.kokain.api.EBean")
 }
 
 dependencies {
