@@ -19,17 +19,19 @@ class EBeanModel(scope: EBean.Scope, sourceElement: Element) : IEBeanModel {
     init {
         val meta = sourceElement.getAnnotation(Metadata::class.java)
         kotlinClassMetadata = if (meta != null) {
-            (KotlinClassMetadata.read(
-                KotlinClassHeader(
-                    meta.kind,
-                    meta.metadataVersion,
-                    meta.data1,
-                    meta.data2,
-                    meta.extraString,
-                    meta.packageName,
-                    meta.extraInt
-                )
-            ) as? KotlinClassMetadata.Class)?.toKmClass()
+            (
+                KotlinClassMetadata.read(
+                    KotlinClassHeader(
+                        meta.kind,
+                        meta.metadataVersion,
+                        meta.data1,
+                        meta.data2,
+                        meta.extraString,
+                        meta.packageName,
+                        meta.extraInt
+                    )
+                ) as? KotlinClassMetadata.Class
+                )?.toKmClass()
         } else {
             null
         }

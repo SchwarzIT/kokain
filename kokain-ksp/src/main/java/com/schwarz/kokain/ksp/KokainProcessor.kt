@@ -39,11 +39,16 @@ class KokainProcessor(codeGenerator: CodeGenerator, private val logger: KSPLogge
                 }
 
         beanModel.forEach {
-            codeGenerator.generate(shadowBeanGenerator.generateModel(it))
+            codeGenerator.generate(
+                shadowBeanGenerator.generateModel(it),
+                listOf(it.containingFile!!)
+            )
         }
 
         factory?.let {
-            codeGenerator.generate(factoryGenerator.generateModel(it, beanModel))
+            val dependencies = mutableListOf(it.containingFile!!)
+            dependencies.addAll(beanModel.map { it.containingFile!! })
+            codeGenerator.generate(factoryGenerator.generateModel(it, beanModel), dependencies)
         }
         return emptyList()
     }
@@ -56,4 +61,3 @@ class KokainProcessorProvider : SymbolProcessorProvider {
         return KokainProcessor(environment.codeGenerator, environment.logger)
     }
 }
-
