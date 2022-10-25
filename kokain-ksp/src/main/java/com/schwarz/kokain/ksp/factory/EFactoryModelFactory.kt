@@ -1,6 +1,5 @@
 package com.schwarz.kokain.ksp.factory
 
-import com.google.devtools.ksp.KSTypesNotPresentException
 import com.google.devtools.ksp.KspExperimental
 import com.google.devtools.ksp.getAnnotationsByType
 import com.google.devtools.ksp.processing.KSPLogger
@@ -11,9 +10,6 @@ import com.schwarz.kokain.api.EFactory
 import com.schwarz.kokain.ksp.model.EFactoryModel
 import com.schwarz.kokain.ksp.util.extractTypesNamesFromAdditionalFactoriesField
 import com.schwarz.kokain.ksp.validation.PreValidator
-import com.squareup.kotlinpoet.TypeName
-import com.squareup.kotlinpoet.asTypeName
-import com.squareup.kotlinpoet.ksp.toTypeName
 
 class EFactoryModelFactory(val logger: KSPLogger, resolver: Resolver) {
 

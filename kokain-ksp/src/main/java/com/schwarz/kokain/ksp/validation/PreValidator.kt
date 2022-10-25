@@ -7,15 +7,11 @@ import com.google.devtools.ksp.getKotlinClassByName
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.google.devtools.ksp.symbol.KSType
 import com.google.devtools.ksp.symbol.Modifier
 import com.schwarz.kokain.api.EBean
 import com.schwarz.kokain.api.EFactory
 import com.schwarz.kokain.api.KDiFactory
 import com.schwarz.kokain.ksp.util.extractTypesNamesFromAdditionalFactoriesField
-import com.schwarz.kokain.ksp.util.getKSAnnotationsByType
-import com.schwarz.kokain.ksp.util.getKSValueArgumentByName
-import com.squareup.kotlinpoet.ksp.toTypeName
 
 class PreValidator(logger: KSPLogger, val resolver: Resolver) {
 
@@ -55,7 +51,6 @@ class PreValidator(logger: KSPLogger, val resolver: Resolver) {
         var result = true
         val additionalFactories = extractTypesNamesFromAdditionalFactoriesField(model.getAnnotationsByType(EFactory::class).first())
 
-
         val kdiFactoryKsType = resolver.getKotlinClassByName(KDiFactory::class.qualifiedName!!)?.asType(
             emptyList()
         )
@@ -68,7 +63,7 @@ class PreValidator(logger: KSPLogger, val resolver: Resolver) {
 
         logger.info("### additionalFactories for ${model.packageName.asString()}")
         additionalFactories.forEach {
-          logger.info("$it")
+            logger.info("$it")
         }
         return result
     }
