@@ -10,8 +10,6 @@ import com.squareup.kotlinpoet.metadata.toKmClass
 import com.sun.tools.javac.code.Symbol
 import kotlinx.metadata.Flag
 import kotlinx.metadata.KmClass
-import kotlinx.metadata.jvm.KotlinClassHeader
-import kotlinx.metadata.jvm.KotlinClassMetadata
 import javax.lang.model.element.Element
 
 @OptIn(KotlinPoetMetadataPreview::class)
