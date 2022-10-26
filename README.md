@@ -2,45 +2,17 @@
 [![codecov](https://codecov.io/gh/SchwarzIT/kokain/branch/master/graph/badge.svg)](https://codecov.io/gh/SchwarzIT/kokain)
 [![jitpack](https://jitpack.io/v/SchwarzIT/kokain.svg)](https://jitpack.io/#SchwarzIT/kokain)
 
-## Kokain
-
-![Kokain Logo](https://raw.githubusercontent.com/schwarzit/kokain/master/android-robot-jonny-full-200x200.png)
+![Kokain Logo](https://raw.githubusercontent.com/schwarzit/kokain/main/kokain-new-martin-268x303.png)
 
 
 
-## Dependency Injection? Why not? It makes things easier, right?
+## What is Kokain
 
-Yes it does! But which Framework strategy is the right for you?
-
-### Code Generation
-
-The Framework generates the injection code as a subclass for every class while compiling. At programing stage the entry point is always a generated shadow class.
-No magical things here. Generated code can be viewed. Awesome isn't it?
-
-"Where there is light, there is also shadow"
-
-- there's always a shadow class needed working as proxy between implementation and injection
-- error handling in code generation depends on validation in annotation processor
-- in java classes they're open per default in kotlin they're not
-
-### More Kotlin based strategy (Property delegates, Extensions)
-
-Kotlin comes along with a lot of features which are very useful. Some DI Frameworks out there provide their service based on these functionalities.
-Property delegates combined with some extension methods makes it easy to handle the value of a property in a different place which results in a wonderful api.
-
-"Sounds fancy but are there shadows too?"
-
-- setup instructions are required for every single component which is supposed to be injected by the framework
-- it's not possible to inject the activity context
-
-
-### What's the result if these approaches decide to make a baby?
-
-![Kokain Logo](https://raw.githubusercontent.com/schwarzit/kokain/master/android-robot-jonny-half-200x200.png)
+Kokain is pragmatic lightweight dependency injection framework for Kotlin based Applications.
+The Framework is reduced to the core functionalities of DI. 
+Therefore the setup is pretty easy and producing nearly zero overhead.
 
 ### Kokain combines code generation with property delegates, that way things become easier
-
-
 
 ## Features
 
@@ -56,7 +28,7 @@ Property delegates combined with some extension methods makes it easy to handle 
 
 * pragmatic api
 
-## Features Android
+### Features Android only
 
 * inject android context in a lifecycle aware matter
 
@@ -167,4 +139,52 @@ class UsageOverview {
     }
 
 }
+```
+
+## Testing your code becomes easy like 123
+
+Example based on Mockk
+
+1.) create a simple extension function 
+
+```
+/**
+ * Sets up Kokain to use [mock] whenever an object of its type needs to be injected.
+ */
+inline fun <reified T : Any> Kokain.setMock(mock: T) {
+    every {
+        create<T>(any(), T::class)
+    } returns mock
+}
+```
+
+2.) do some tests
+
+```
+class MySuperFancyControllerTest {
+
+    @RelaxedMockK
+    private lateinit var myBean1: BeanWithCode
+
+    @RelaxedMockK
+    lateinit var kokain: Kokain
+
+    @BeforeEach
+    fun setUp() {
+        kokain.setMock(myBean1)
+    
+
+        KokainInstance.start(kokain)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        KokainInstance.stop()
+        unmockkAll()
+    }
+    
+    @Test
+    fun `do my test magic here without care about kokain`() {
+    
+    }
 ```
