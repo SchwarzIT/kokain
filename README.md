@@ -1,5 +1,5 @@
 ![Build Status](https://github.com/SchwarzIT/kokain/actions/workflows/android_pre_hook.yml/badge.svg)
-[![codecov](https://codecov.io/gh/SchwarzIT/kokain/branch/master/graph/badge.svg)](https://codecov.io/gh/SchwarzIT/kokain)
+[![codecov](https://codecov.io/gh/SchwarzIT/kokain/branch/main/graph/badge.svg)](https://codecov.io/gh/SchwarzIT/kokain)
 [![jitpack](https://jitpack.io/v/SchwarzIT/kokain.svg)](https://jitpack.io/#SchwarzIT/kokain)
 
 ![Kokain Logo](https://raw.githubusercontent.com/schwarzit/kokain/main/kokain-new-martin-268x303.png)
