@@ -1,16 +1,64 @@
 apply plugin: 'kotlin'
 apply plugin: 'maven-publish'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply plugin: 'signing'
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = 'com.schwarz.kokain'
+            groupId = 'io.github.schwarzit'
             artifactId = 'kokain-core-lib'
-            version = '0.1'
+            version = "$artefactVersion"
             from components.java
+
+            pom {
+                name = 'Kokain DI Framework'
+                description = 'Kokain a pragmatic lightweight dependency injection framework for Kotlin based Applications.'
+                url = 'https://schwarzit.github.io/kokain/'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'android_development'
+                        name = 'SchwarzIT'
+                        email = 'android_development@mail.schwarz'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/SchwarzIT/kokain.git'
+                    developerConnection = 'scm:git:ssh://github.com/SchwarzIT/kokain.git'
+                    url = 'https://github.com/SchwarzIT/kokain.git'
+                }
+            }
         }
     }
+
+    repositories {
+        maven {
+            credentials {
+                username = "$ossrhUsername"
+                password = "$ossrhPassword"
+            }
+            def releaseRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = artefactVersion.endsWith('SNAPSHOT') ? snapshotRepoUrl : releaseRepoUrl
+        }
+    }
+}
+
+signing {
+    sign configurations.archives
+    sign publishing.publications.mavenJava
 }
 
 compileKotlin {
@@ -18,6 +66,7 @@ compileKotlin {
         jvmTarget = "1.8"
     }
 }
+
 compileTestKotlin {
     kotlinOptions {
         jvmTarget = "1.8"

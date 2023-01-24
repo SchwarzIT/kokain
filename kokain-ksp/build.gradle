@@ -4,21 +4,68 @@ apply plugin: 'jacoco'
 apply plugin: 'pmd'
 apply plugin: 'kotlin-kapt'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply plugin: 'signing'
 
 targetCompatibility = '1.8'
 sourceCompatibility = '1.8'
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = 'com.schwarz.kokain'
+            groupId = 'io.github.schwarzit'
             artifactId = 'kokain-ksp'
-            version = '0.1'
+            version = "$artefactVersion"
             from components.java
+
+            pom {
+                name = 'Kokain DI Framework'
+                description = 'Kokain a pragmatic lightweight dependency injection framework for Kotlin based Applications.'
+                url = 'https://schwarzit.github.io/kokain/'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'android_development'
+                        name = 'SchwarzIT'
+                        email = 'android_development@mail.schwarz'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/SchwarzIT/kokain.git'
+                    developerConnection = 'scm:git:ssh://github.com/SchwarzIT/kokain.git'
+                    url = 'https://github.com/SchwarzIT/kokain.git'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username = "$ossrhUsername"
+                password = "$ossrhPassword"
+            }
+            def releaseRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = artefactVersion.endsWith('SNAPSHOT') ? snapshotRepoUrl : releaseRepoUrl
         }
     }
 }
 
+signing {
+    sign configurations.archives
+    sign publishing.publications.mavenJava
+}
 
 jacoco {
     toolVersion = "0.8.7"
@@ -29,7 +76,6 @@ jacocoTestReport {
     dependsOn 'test'
 
     reports {
-
         xml.enabled = true
         html.enabled = false
     }
@@ -40,6 +86,7 @@ compileKotlin {
         jvmTarget = "1.8"
     }
 }
+
 compileTestKotlin {
     kotlinOptions {
         jvmTarget = "1.8"
@@ -48,12 +95,12 @@ compileTestKotlin {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'com.squareup:kotlinpoet:1.12.0'
-    implementation("com.squareup:kotlinpoet-ksp:1.12.0")
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.6.21-1.0.6")
-    testImplementation 'junit:junit:4.12'
+    implementation "com.squareup:kotlinpoet:1.12.0"
+    implementation "com.squareup:kotlinpoet-ksp:1.12.0"
+    implementation "com.google.devtools.ksp:symbol-processing-api:1.6.21-1.0.6"
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "org.mockito:mockito-core:1.10.19"
+    testImplementation "com.github.tschuchortdev:kotlin-compile-testing-ksp:1.4.9"
     testImplementation project(path: ':kokain-core-api', configuration: 'default')
-    testImplementation 'com.github.tschuchortdev:kotlin-compile-testing-ksp:1.4.9'
-    testImplementation 'org.mockito:mockito-core:1.10.19'
     implementation project(path: ':kokain-generator-lib', configuration: 'default')
 }
