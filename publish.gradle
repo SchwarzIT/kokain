@@ -1,0 +1,44 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'io.github.schwarzit'
+            artifactId = 'kokain'
+            version = "$artefactVersion"
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom {
+                name = 'Kokain DI Framework'
+                description = 'Kokain a pragmatic lightweight dependency injection framework for Kotlin based Applications.'
+                url = 'https://schwarzit.github.io/kokain/'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'android_development'
+                        name = 'SchwarzIT'
+                        email = 'android_development@mail.schwarz'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/SchwarzIT/kokain.git'
+                    developerConnection = 'scm:git:ssh://github.com/SchwarzIT/kokain.git'
+                    url = 'https://github.com/SchwarzIT/kokain.git'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications
+}

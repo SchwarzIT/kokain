@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
+apply from: "${rootProject.projectDir}/javadocAndroid.gradle"
+apply from: "${rootProject.projectDir}/publishAndroid.gradle"
 
 buildscript {
     repositories {
@@ -21,7 +21,7 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 28
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -30,76 +30,27 @@ android {
         consumerProguardFiles 'consumer-rules.pro'
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion = '30.0.2'
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                groupId = 'io.github.schwarzit'
-                artifactId = 'kokain-di'
-                version = "$artefactVersion"
-
-                pom {
-                    name = 'Kokain DI Framework'
-                    description = 'Kokain a pragmatic lightweight dependency injection framework for Kotlin based Applications.'
-                    url = 'https://schwarzit.github.io/kokain/'
-
-                    licenses {
-                        license {
-                            name = 'The Apache License, Version 2.0'
-                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        }
-                    }
-                    developers {
-                        developer {
-                            id = 'android_development'
-                            name = 'SchwarzIT'
-                            email = 'android_development@mail.schwarz'
-                        }
-                    }
-                    scm {
-                        connection = 'scm:git:git://github.com/SchwarzIT/kokain.git'
-                        developerConnection = 'scm:git:ssh://github.com/SchwarzIT/kokain.git'
-                        url = 'https://github.com/SchwarzIT/kokain.git'
-                    }
-                }
-            }
-        }
-    }
-
-    repositories {
-        maven {
-            credentials {
-                username = "$ossrhUsername"
-                password = "$ossrhPassword"
-            }
-            def releaseRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            url = artefactVersion.endsWith('SNAPSHOT') ? snapshotRepoUrl : releaseRepoUrl
-        }
-    }
-}
-
-signing {
-    sign configurations.archives
+    buildToolsVersion = '30.0.3'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:1.1.0"
-    implementation "androidx.lifecycle:lifecycle-runtime:2.1.0"
+    implementation "androidx.appcompat:appcompat:1.4.2"   // limited by targetSdkVersion 31
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
     implementation project(path: ':kokain-core-api')
     api project(path: ':kokain-core-lib')
     testImplementation "junit:junit:4.13.2"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
