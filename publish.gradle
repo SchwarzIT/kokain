@@ -5,14 +5,13 @@ publishing {
     publications {
         release(MavenPublication) {
             groupId = 'io.github.schwarzit'
-            artifactId = 'kokain'
             version = "$artefactVersion"
             from components.java
             artifact sourcesJar
             artifact javadocJar
 
             pom {
-                name = 'Kokain DI Framework'
+                name = "${project.group}:${project.name}"
                 description = 'Kokain a pragmatic lightweight dependency injection framework for Kotlin based Applications.'
                 url = 'https://schwarzit.github.io/kokain/'
 
