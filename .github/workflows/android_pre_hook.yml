@@ -26,7 +26,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew ktlintCheck jacocoTestReport -PossrhStagingProfileId='${{ secrets.OSSRH_STAGING_PROFILE_ID }}'
+      run: ./gradlew ktlintCheck jacocoTestReport -PossrhUsername='${{ secrets.OSSRH_USERNAME }}' -PossrhPassword='${{ secrets.OSSRH_PASSWORD }}' -PossrhStagingProfileId='${{ secrets.OSSRH_STAGING_PROFILE_ID }}'
     - name: Upload Test Report
       run:  bash <(curl -s https://codecov.io/bash)
 
