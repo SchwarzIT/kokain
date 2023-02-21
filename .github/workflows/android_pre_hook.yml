@@ -23,7 +23,7 @@ jobs:
     - name: Prepare GPG key
       run: mkdir build && echo '${{secrets.SIGNING_KEY_FILE_BASE64}}' | base64 -d > build/kokain_signing_key.gpg
     - name: Check GPG key
-      run: ls -lsa build && ls -lsa build/kokain_signing_key.gpg
+      run: pwd && ls -lsa build && ls -lsa build/kokain_signing_key.gpg
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
