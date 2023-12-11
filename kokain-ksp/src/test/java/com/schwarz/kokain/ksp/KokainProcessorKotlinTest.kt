@@ -1,11 +1,14 @@
 package com.schwarz.kokain.ksp
 
+import com.tschuchort.compiletesting.JvmCompilationResult
 import com.tschuchort.compiletesting.KotlinCompilation
 import com.tschuchort.compiletesting.SourceFile
 import com.tschuchort.compiletesting.symbolProcessorProviders
+import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 import org.junit.Assert
 import org.junit.Test
 
+@OptIn(ExperimentalCompilerApi::class)
 class KokainProcessorKotlinTest {
 
     @Test
@@ -24,7 +27,7 @@ class KokainProcessorKotlinTest {
         Assert.assertEquals(KotlinCompilation.ExitCode.OK, compilation.exitCode)
     }
 
-    private fun compileKotlin(vararg sourceFiles: SourceFile): KotlinCompilation.Result {
+    private fun compileKotlin(vararg sourceFiles: SourceFile): JvmCompilationResult {
         return KotlinCompilation().apply {
             sources = sourceFiles.toMutableList()
             symbolProcessorProviders = listOf(KokainProcessorProvider())
