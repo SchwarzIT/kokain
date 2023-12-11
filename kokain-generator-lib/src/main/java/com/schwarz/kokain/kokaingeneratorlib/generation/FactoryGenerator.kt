@@ -28,7 +28,6 @@ class FactoryGenerator {
     }
 
     private fun propAdditionalFactories(factory: IEFactoryModel): PropertySpec {
-
         val builder = StringBuilder("arrayOf<%T>")
         val types = ArrayList<Any>()
         val joiner = StringJoiner(",", "(", ")")
@@ -45,7 +44,6 @@ class FactoryGenerator {
     }
 
     private fun create(beans: List<IEBeanModel>): FunSpec {
-
         var builder = FunSpec.builder("createInstance").addModifiers(KModifier.PUBLIC, KModifier.OVERRIDE).addParameter("clazz", TypeUtil.classStar()).returns(TypeUtil.any().copy(true))
 
         builder = builder.beginControlFlow("when(clazz)")
@@ -69,7 +67,6 @@ class FactoryGenerator {
     }
 
     private fun mapScope(scope: EBean.Scope): MemberName {
-
         return MemberName(TypeUtil.scope() as ClassName, scope.toString())
     }
 

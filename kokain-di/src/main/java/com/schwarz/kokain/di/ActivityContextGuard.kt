@@ -88,7 +88,6 @@ class ActivityContextGuard(applicationContext: Application) : LifecycleObserver 
     }
 
     fun onNewContext(activity: ComponentActivity) {
-
         if (activityRefs[activity.toString()]?.isSame(activity) == true) {
             return
         }

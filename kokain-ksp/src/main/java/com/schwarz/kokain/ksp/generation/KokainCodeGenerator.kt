@@ -11,7 +11,6 @@ class KokainCodeGenerator(private val generator: CodeGenerator) {
 
     @Throws(IOException::class)
     fun generate(toGenerate: FileSpec, containingFile: List<KSFile>, aggregating: Boolean = false) {
-
         val fileWithHeader = toGenerate.toBuilder().addFileComment(HEADER).build()
         generator.createNewFile(
             Dependencies(aggregating, *containingFile.toTypedArray()),

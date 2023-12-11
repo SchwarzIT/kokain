@@ -1,16 +1,17 @@
 package com.schwarz.kokain.processor.util
 
 import com.schwarz.kokain.processor.KokainProcessor
+import com.tschuchort.compiletesting.JvmCompilationResult
 import com.tschuchort.compiletesting.KotlinCompilation
 import com.tschuchort.compiletesting.SourceFile
+import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 import org.junit.Assert
 import org.junit.Test
-
+@OptIn(ExperimentalCompilerApi::class)
 class KokainProcessorKotlinTest {
 
     @Test
     fun testKotlinBasicGeneration() {
-
         val subEntity = SourceFile.kotlin(
             "FooBean.kt",
             HEADER +
@@ -27,7 +28,6 @@ class KokainProcessorKotlinTest {
 
     @Test
     fun testKotlinInternalBasicGeneration() {
-
         val subEntity = SourceFile.kotlin(
             "FooBean.kt",
             HEADER +
@@ -42,12 +42,13 @@ class KokainProcessorKotlinTest {
         Assert.assertEquals(compilation.exitCode, KotlinCompilation.ExitCode.OK)
     }
 
-    private fun compileKotlin(vararg sourceFiles: SourceFile): KotlinCompilation.Result {
+    private fun compileKotlin(vararg sourceFiles: SourceFile): JvmCompilationResult {
         return KotlinCompilation().apply {
             sources = sourceFiles.toMutableList()
 
             // pass your own instance of an annotation processor
             annotationProcessors = listOf(KokainProcessor())
+            jvmTarget = "17"
 
             inheritClassPath = true
             messageOutputStream = System.out // see diagnostics in real time

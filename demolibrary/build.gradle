@@ -1,17 +1,16 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 //apply plugin: 'kotlin-kapt'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: "com.google.devtools.ksp"
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "29.0.3"
 
+    namespace 'com.example.demolibrary'
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 31
+        compileSdk = 31
         versionCode 1
         versionName "1.0"
 
@@ -25,6 +24,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 
 }
 
@@ -36,7 +39,7 @@ kotlin {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation project(path: ':kokain-di')

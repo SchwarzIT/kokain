@@ -48,7 +48,6 @@ class KokainProcessor : AbstractProcessor() {
     }
 
     override fun process(set: Set<TypeElement>, roundEnv: RoundEnvironment): Boolean {
-
         if (set.isEmpty()) {
             // no annotation we should take care off
             return false

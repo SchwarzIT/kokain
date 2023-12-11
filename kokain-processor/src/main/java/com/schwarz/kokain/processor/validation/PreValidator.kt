@@ -22,7 +22,6 @@ class PreValidator(logger: Logger, types: Types, elements: Elements) {
 
     @Throws(ClassNotFoundException::class)
     fun validate(model: EBeanModel) {
-
         val entityElement = model.sourceElement
 
         if (entityElement.modifiers.contains(Modifier.PRIVATE)) {
@@ -36,9 +35,7 @@ class PreValidator(logger: Logger, types: Types, elements: Elements) {
         }
 
         for (member in entityElement.enclosedElements) {
-
             if (member.kind == ElementKind.CONSTRUCTOR) {
-
                 val constructor = member as Symbol.MethodSymbol
 
                 if (constructor.parameters.size != 0) {
@@ -50,9 +47,7 @@ class PreValidator(logger: Logger, types: Types, elements: Elements) {
 
     @Throws(ClassNotFoundException::class)
     fun validateFactory(model: EFactoryModel) {
-
         for (factory in model.additionalFactoriesTypeMirror) {
-
             if (!types.isSameType(factory, elements.getTypeElement("java.lang.Void").asType()) && !types.isAssignable(factory, elements.getTypeElement("${TypeUtil.KOKAIN_API_BASE_PACKAGE}.KDiFactory").asType())) {
                 logger.error(EFactory::class.java.simpleName + " additionalFactories have to implement KdiFactory", model.sourceElement)
             }

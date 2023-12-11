@@ -28,6 +28,7 @@ class KokainProcessorKotlinTest {
         return KotlinCompilation().apply {
             sources = sourceFiles.toMutableList()
             symbolProcessorProviders = listOf(KokainProcessorProvider())
+            jvmTarget = "17"
 
             inheritClassPath = true
             messageOutputStream = System.out // see diagnostics in real time
