@@ -14,7 +14,6 @@ abstract class KokainCore(diFactory: KDiFactory, customCurator: CustomCurator? =
     private val customCurator = customCurator
 
     fun <V : Any> create(thisRef: Any, clazz: KClass<*>): V {
-
         var bean = beanLifecycleCurator.getInstance(clazz) as V?
         if (bean == null) {
             bean = customCurator?.getInstance(clazz)

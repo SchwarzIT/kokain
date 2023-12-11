@@ -8,7 +8,6 @@ class CodeGenerator(private val filer: Filer) {
 
     @Throws(IOException::class)
     fun generate(entityToGenerate: FileSpec) {
-
         val fileWithHeader = entityToGenerate.toBuilder().addFileComment(HEADER).build()
 
         fileWithHeader.writeTo(filer)

@@ -19,7 +19,6 @@ class EFactoryModelFactory(val logger: KSPLogger, resolver: Resolver) {
     fun create(element: KSAnnotated): EFactoryModel? {
         (element as? KSClassDeclaration)?.let {
             if (preValidator.validateFactory(it)) {
-
                 val factories = extractTypesNamesFromAdditionalFactoriesField(element.getAnnotationsByType(EFactory::class).first())
 
                 val simpleName = element.simpleName.asString()

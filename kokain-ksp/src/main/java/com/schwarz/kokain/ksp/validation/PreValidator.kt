@@ -16,7 +16,6 @@ class PreValidator(logger: KSPLogger, val resolver: Resolver) {
 
     @Throws(ClassNotFoundException::class)
     fun validateEbean(model: KSClassDeclaration): Boolean {
-
         val entityElement = model
         var result = true
 

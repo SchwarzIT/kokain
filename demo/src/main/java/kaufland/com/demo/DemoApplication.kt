@@ -18,7 +18,6 @@ class DemoApplication : Application(), CustomCurator {
     }
 
     override fun <V : Any> getInstance(clazz: KClass<*>): V? {
-
         return when (clazz) {
             ClassFromAnotherLibrary::class -> ClassFromAnotherLibrary(this)
             else -> null

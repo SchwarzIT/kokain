@@ -7,29 +7,29 @@ apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.squareup:kotlinpoet:1.12.0'
-    implementation 'com.squareup:kotlinpoet-metadata:1.12.0'
+    implementation 'com.squareup:kotlinpoet:1.15.3'
+    implementation 'com.squareup:kotlinpoet-metadata:1.15.3'
     implementation project(path: ':kokain-generator-lib', configuration: 'default')
     implementation 'org.apache.commons:commons-lang3:3.4'
     testImplementation 'junit:junit:4.12'
     testImplementation project(path: ':kokain-core-api', configuration: 'default')
-    testImplementation 'com.github.tschuchortdev:kotlin-compile-testing:1.4.9'
+    testImplementation 'dev.zacsweers.kctfork:core:0.4.0'
     testImplementation 'org.mockito:mockito-core:1.10.19'
-    kapt "com.google.auto.service:auto-service:1.0-rc6"
-    implementation "com.google.auto.service:auto-service:1.0-rc6"
+    kapt "com.google.auto.service:auto-service:1.0-rc7"
+    compileOnly "com.google.auto.service:auto-service:1.0-rc7"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
 }
 
-targetCompatibility = '1.8'
-sourceCompatibility = '1.8'
+targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_17
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = 'com.schwarz.kokain'
-            artifactId = 'kokain-processor'
-            version = '0.1'
+            groupId project.group
+            artifactId project.name
+            version project.version
             from components.java
         }
     }
@@ -46,19 +46,30 @@ jacocoTestReport {
 
     reports {
 
-        xml.enabled = true
-        html.enabled = false
+        xml.required = true
+        html.required = false
     }
 }
 
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
+
+if (JavaVersion.current() >= JavaVersion.VERSION_16) {
+    test {
+        jvmArgs(
+                "--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
+                "--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
+                "--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED",
+                "--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
+                "--add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED",
+                "--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED",
+                "--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED",
+                "--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED",
+                "--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
+                "--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
+        )
     }
 }
 

@@ -7,7 +7,7 @@ import com.schwarz.kokain.di.inject
 import kaufland.com.demo.bean.FooBean
 import kaufland.com.demo.bean.FooBeanInterface
 import kaufland.com.demo.bean.FooSingletonBean
-import kotlinx.android.synthetic.main.activity_main.*
+import kaufland.com.demo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,12 +19,16 @@ class MainActivity : AppCompatActivity() {
 
     private val mClassFromAnotherLibrary: ClassFromAnotherLibrary by inject()
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         mClassFromAnotherLibrary.doSomething()
-        btnSwitch.text = "${resources.getString(R.string.switchTo)} $localClassName"
-        btnSwitch.setOnClickListener {
+        binding.btnSwitch.text = "${resources.getString(R.string.switchTo)} $localClassName"
+        binding.btnSwitch.setOnClickListener {
             startActivity(Intent(this, MainActivity2::class.java))
             finish()
         }
@@ -35,9 +39,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        runningSinceLbl.text = "Running for ${mSingletonBean.calculateRunningTime()}"
+        binding.runningSinceLbl.text = "Running for ${mSingletonBean.calculateRunningTime()}"
         mFooBean.countUp()
         title = mFooBean.saySomething()
-        customView.doTest()
+        binding.customView.doTest()
     }
 }

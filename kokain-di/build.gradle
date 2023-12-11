@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'maven-publish'
 
@@ -10,18 +9,18 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'com.android.tools.build:gradle:8.0.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
 android {
-    compileSdkVersion 31
 
-
+    namespace 'com.schwarz.kokain'
     defaultConfig {
         minSdkVersion 21
+        compileSdk 31
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -36,16 +35,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion = '30.0.2'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 }
 
 afterEvaluate {
     publishing {
         publications {
             mavenJava(MavenPublication) {
-                groupId = 'com.schwarz.kokain'
-                artifactId = 'kokain-di'
-                version = '0.1'
+                groupId groupName
+                artifactId project.name
+                version project.version
                 from components.release
             }
         }
@@ -54,9 +56,9 @@ afterEvaluate {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation "androidx.lifecycle:lifecycle-runtime:2.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation "androidx.lifecycle:lifecycle-runtime:2.3.1"
     implementation project(path: ':kokain-core-api')
     api project(path: ':kokain-core-lib')
     testImplementation 'junit:junit:4.12'

@@ -5,24 +5,22 @@ apply plugin: "org.jlleitschuh.gradle.ktlint"
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = 'com.schwarz.kokain'
-            artifactId = 'kokain-di-jvm'
-            version = '0.1'
+            groupId project.group
+            artifactId project.name
+            version project.version
             from components.java
         }
     }
 }
 
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_17
+
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
+
 dependencies {
     api project(path: ':kokain-core-lib', configuration: 'default')
 }
