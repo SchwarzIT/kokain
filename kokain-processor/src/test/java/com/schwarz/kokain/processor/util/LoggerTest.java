@@ -13,6 +13,8 @@ import javax.tools.Diagnostic;
 
 public class LoggerTest {
 
+    private static final String MESSAGE = "message";
+
     private ProcessingEnvironment mMock;
     private Messager mMessagerMock;
 
@@ -27,38 +29,38 @@ public class LoggerTest {
     @Test
     public void testWarn() {
 
-        new Logger(mMock).warn("message", null);
-        Mockito.verify(mMessagerMock).printMessage(Diagnostic.Kind.WARNING, "message", null);
+        new Logger(mMock).warn(MESSAGE, null);
+        Mockito.verify(mMessagerMock).printMessage(Diagnostic.Kind.WARNING, MESSAGE, null);
     }
 
     @Test
     public void testError() {
 
-        new Logger(mMock).error("message", null);
-        Mockito.verify(mMessagerMock).printMessage(Diagnostic.Kind.ERROR, "message", null);
+        new Logger(mMock).error(MESSAGE, null);
+        Mockito.verify(mMessagerMock).printMessage(Diagnostic.Kind.ERROR, MESSAGE, null);
     }
 
     @Test
     public void testErrorAbort() {
 
         try {
-            new Logger(mMock).abortWithError("message", null, null);
+            new Logger(mMock).abortWithError(MESSAGE, null, null);
             Assert.fail("Should throw Exception");
-        } catch (RuntimeException e) {
+        } catch (RuntimeException expected) {
 
         }
-        Mockito.verify(mMessagerMock).printMessage(Diagnostic.Kind.ERROR, "message", null);
+        Mockito.verify(mMessagerMock).printMessage(Diagnostic.Kind.ERROR, MESSAGE, null);
 
     }
 
     @Test
     public void testInfo() {
 
-        new Logger(mMock).info("message");
-        Mockito.verify(mMessagerMock).printMessage(Diagnostic.Kind.NOTE, "message");
+        new Logger(mMock).info(MESSAGE);
+        Mockito.verify(mMessagerMock).printMessage(Diagnostic.Kind.NOTE, MESSAGE);
 
-        new Logger(mMock).info("message", null);
-        Mockito.verify(mMessagerMock).printMessage(Diagnostic.Kind.NOTE, "message", null);
+        new Logger(mMock).info(MESSAGE, null);
+        Mockito.verify(mMessagerMock).printMessage(Diagnostic.Kind.NOTE, MESSAGE, null);
     }
 
 }
