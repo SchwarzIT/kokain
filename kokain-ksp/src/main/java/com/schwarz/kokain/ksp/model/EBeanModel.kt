@@ -10,5 +10,5 @@ data class EBeanModel(
     override val sourceClazzSimpleName: String,
     override val `package`: String,
     override val classVisibility: KModifier,
-    val containingFile: KSFile?
+    val containingFile: KSFile?,
 ) : IEBeanModel

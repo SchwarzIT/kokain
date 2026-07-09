@@ -15,7 +15,7 @@ class KokainCodeGenerator(private val generator: CodeGenerator) {
         generator.createNewFile(
             Dependencies(aggregating, *containingFile.toTypedArray()),
             fileWithHeader.packageName,
-            fileWithHeader.name
+            fileWithHeader.name,
         )
             .writer()
             .use { fileWithHeader.writeTo(it) }

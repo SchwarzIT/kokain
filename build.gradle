@@ -1,22 +1,21 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 buildscript {
-    ext.kotlin_version = '1.9.21'
+    ext.kotlin_version = '2.3.21'
     ext.groupName = 'com.github.SchwarzIT'
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven {
-            url "https://plugins.gradle.org/m2/"
+            url = "https://plugins.gradle.org/m2/"
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.13.2'
+        classpath 'com.android.tools.build:gradle:9.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.5.1"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:14.2.0"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
-        classpath "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:1.9.21-1.0.15"
+        classpath "com.google.devtools.ksp:symbol-processing-gradle-plugin:2.3.9"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -38,20 +37,6 @@ allprojects {
 
     repositories {
         mavenCentral()
-        jcenter()
-        maven { url 'https://maven.google.com' }
         google()
-    }
-
-    ktlint {
-        // disabled because java imports put to the list end by intellij
-        disabledRules = [
-                "import-ordering",
-                "chain-wrapping",
-        ]
-
-        // Workaround for ktlint memory leak; remove when issue got fixed
-        //   https://github.com/JLLeitschuh/ktlint-gradle/issues/507
-        version = "0.46.1"
     }
 }

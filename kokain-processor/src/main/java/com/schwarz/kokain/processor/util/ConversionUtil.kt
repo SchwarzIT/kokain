@@ -9,7 +9,7 @@ object ConversionUtil {
 
         val sb = StringBuffer()
         while (m.find()) {
-            m.appendReplacement(sb, "_" + m.group().toLowerCase())
+            m.appendReplacement(sb, "_" + m.group().lowercase())
         }
         m.appendTail(sb)
 

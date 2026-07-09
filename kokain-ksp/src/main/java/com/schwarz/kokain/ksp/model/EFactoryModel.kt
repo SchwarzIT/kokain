@@ -8,5 +8,5 @@ data class EFactoryModel(
     override val additionalFactories: List<TypeName>,
     override val sourceClazzSimpleName: String,
     override val `package`: String,
-    val containingFile: KSFile?
+    val containingFile: KSFile?,
 ) : IEFactoryModel

@@ -5,21 +5,20 @@ import com.schwarz.kokain.kokaingeneratorlib.model.IEBeanModel
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.TypeName
-import com.squareup.kotlinpoet.metadata.KotlinPoetMetadataPreview
-import com.squareup.kotlinpoet.metadata.toKmClass
 import com.sun.tools.javac.code.Symbol
-import kotlinx.metadata.Flag
-import kotlinx.metadata.KmClass
+import kotlin.metadata.KmClass
+import kotlin.metadata.Visibility
+import kotlin.metadata.jvm.KotlinClassMetadata
+import kotlin.metadata.visibility
 import javax.lang.model.element.Element
 
-@OptIn(KotlinPoetMetadataPreview::class)
 class EBeanModel(scope: EBean.Scope, sourceElement: Element) : IEBeanModel {
 
     private val kotlinClassMetadata: KmClass?
 
     init {
         kotlinClassMetadata = sourceElement?.getAnnotation(Metadata::class.java)?.let {
-            it.toKmClass()
+            (KotlinClassMetadata.readStrict(it) as? KotlinClassMetadata.Class)?.kmClass
         }
     }
 
@@ -39,10 +38,8 @@ class EBeanModel(scope: EBean.Scope, sourceElement: Element) : IEBeanModel {
     override val classVisibility: KModifier
         get() {
             // we are not interested in other visibilities since they're not injectable
-            kotlinClassMetadata?.flags?.let {
-                if (Flag.IS_INTERNAL(it)) {
-                    return KModifier.INTERNAL
-                }
+            if (kotlinClassMetadata?.visibility == Visibility.INTERNAL) {
+                return KModifier.INTERNAL
             }
             return KModifier.PUBLIC
         }

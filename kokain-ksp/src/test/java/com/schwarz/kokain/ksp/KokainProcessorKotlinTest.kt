@@ -3,7 +3,7 @@ package com.schwarz.kokain.ksp
 import com.tschuchort.compiletesting.JvmCompilationResult
 import com.tschuchort.compiletesting.KotlinCompilation
 import com.tschuchort.compiletesting.SourceFile
-import com.tschuchort.compiletesting.symbolProcessorProviders
+import com.tschuchort.compiletesting.configureKsp
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 import org.junit.Assert
 import org.junit.Test
@@ -30,7 +30,9 @@ class KokainProcessorKotlinTest {
     private fun compileKotlin(vararg sourceFiles: SourceFile): JvmCompilationResult {
         return KotlinCompilation().apply {
             sources = sourceFiles.toMutableList()
-            symbolProcessorProviders = listOf(KokainProcessorProvider())
+            configureKsp {
+                symbolProcessorProviders += KokainProcessorProvider()
+            }
             jvmTarget = "17"
 
             inheritClassPath = true

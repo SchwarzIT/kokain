@@ -1,0 +1,13 @@
+root = true
+
+# ktlint rule configuration (moved here from the ktlint{} Gradle block,
+# which no longer supports disabledRules since ktlint-gradle 12+)
+[*.{kt,kts}]
+# keep the pre-ktlint-1.x rule behaviour instead of the stricter ktlint_official style
+ktlint_code_style = intellij_idea
+# disabled because java imports put to the list end by intellij
+ktlint_standard_import-ordering = disabled
+ktlint_standard_chain-wrapping = disabled
+# rules introduced after ktlint 0.46 that the existing code does not follow
+ktlint_standard_class-signature = disabled
+ktlint_standard_function-expression-body = disabled

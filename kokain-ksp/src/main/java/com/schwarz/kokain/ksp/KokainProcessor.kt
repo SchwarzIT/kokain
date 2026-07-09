@@ -49,7 +49,7 @@ class KokainProcessor(codeGenerator: CodeGenerator, val logger: KSPLogger) : Sym
 
 class KokainProcessorProvider : SymbolProcessorProvider {
     override fun create(
-        environment: SymbolProcessorEnvironment
+        environment: SymbolProcessorEnvironment,
     ): SymbolProcessor {
         return KokainProcessor(environment.codeGenerator, environment.logger)
     }

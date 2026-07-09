@@ -15,9 +15,9 @@ import java.lang.StringBuilder
 import java.util.StringJoiner
 import kotlin.collections.ArrayList
 
-class FactoryGenerator {
+private const val ADDITIONAL_FACTORY_PROPERTY_NAME = "additonalFactories"
 
-    private final val ADDITIONAL_FACTORY_PROPERTY_NAME = "additonalFactories"
+class FactoryGenerator {
 
     fun generateModel(factory: IEFactoryModel, beans: List<IEBeanModel>): FileSpec {
         val typeBuilder = TypeSpec.classBuilder("GeneratedFactory").addModifiers(KModifier.PUBLIC).addSuperinterface(TypeUtil.kdiFactory())
