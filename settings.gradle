@@ -1,3 +1,6 @@
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
 include ':kokain-core-api', ':kokain-processor', ':demo', ':kokain-di', ':demolibrary'
 include ':kokain-core-lib'
 include ':kokain-di-jvm'

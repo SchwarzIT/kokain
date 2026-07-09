@@ -5,6 +5,10 @@ apply plugin: 'pmd'
 apply plugin: 'kotlin-kapt'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 
+kotlin {
+    jvmToolchain(17)
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.squareup:kotlinpoet:2.3.0'
