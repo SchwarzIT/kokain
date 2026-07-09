@@ -1,6 +1,7 @@
 package com.schwarz.kokain.di
 
 import androidx.activity.ComponentActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.schwarz.kokain.corelib.observer.RefreshingReadonlyProperty
 import kotlin.reflect.KClass
@@ -55,6 +56,6 @@ inline fun Any.context(): ActivityContextGuard {
 
 inline fun <reified T : Any, reified V : Any> Any.systemService(): RefreshingReadonlyProperty<T, V?> {
     return RefreshingReadonlyProperty<T, V?> { t: T, desc ->
-        return@RefreshingReadonlyProperty KokainInstance.mInstance!!.mGuard?.getValue(t, desc)?.getSystemService(V::class.java)
+        return@RefreshingReadonlyProperty KokainInstance.mInstance!!.mGuard?.getValue(t, desc)?.let { ContextCompat.getSystemService(it, V::class.java) }
     }
 }
