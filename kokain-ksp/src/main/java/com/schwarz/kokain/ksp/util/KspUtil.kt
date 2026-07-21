@@ -7,8 +7,9 @@ import kotlin.reflect.KClass
 
 fun KSAnnotated.getKSAnnotationsByType(annotationKClass: KClass<*>): Sequence<KSAnnotation> {
     return this.annotations.filter {
-        it.shortName.getShortName() == annotationKClass.simpleName && it.annotationType.resolve().declaration
-            .qualifiedName?.asString() == annotationKClass.qualifiedName
+        it.shortName.getShortName() == annotationKClass.simpleName &&
+            it.annotationType.resolve().declaration
+                .qualifiedName?.asString() == annotationKClass.qualifiedName
     }
 }
 

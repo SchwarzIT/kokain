@@ -18,7 +18,7 @@ class KokainProcessorKotlinTest {
                 "@EBean\n" +
                 "@EFactory\n" +
                 "open class FooBean {\n" +
-                "}"
+                "}",
         )
 
         val compilation = compileKotlin(subEntity)
@@ -34,7 +34,7 @@ class KokainProcessorKotlinTest {
                 "@EBean\n" +
                 "@EFactory\n" +
                 "open internal class FooBean {\n" +
-                "}"
+                "}",
         )
 
         val compilation = compileKotlin(subEntity)

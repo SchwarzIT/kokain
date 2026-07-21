@@ -46,7 +46,7 @@ class PreValidator(logger: KSPLogger, val resolver: Resolver) {
     fun validateFactory(model: KSClassDeclaration): Boolean {
         var result = true
         val additionalFactories = extractTypesNamesFromAdditionalFactoriesField(
-            model.getAnnotationsByType(EFactory::class).first()
+            model.getAnnotationsByType(EFactory::class).first(),
         )
 
         if (additionalFactories.isEmpty()) {

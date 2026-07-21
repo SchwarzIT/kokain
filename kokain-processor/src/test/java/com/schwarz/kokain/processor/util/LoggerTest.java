@@ -43,12 +43,7 @@ public class LoggerTest {
     @Test
     public void testErrorAbort() {
 
-        try {
-            new Logger(mMock).abortWithError(MESSAGE, null, null);
-            Assert.fail("Should throw Exception");
-        } catch (RuntimeException expected) {
-
-        }
+        Assert.assertThrows(RuntimeException.class, () -> new Logger(mMock).abortWithError(MESSAGE, null, null));
         Mockito.verify(mMessagerMock).printMessage(Diagnostic.Kind.ERROR, MESSAGE, null);
 
     }

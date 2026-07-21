@@ -13,7 +13,7 @@ class ShadowBeanGenerator {
 
     fun generateModel(holder: IEBeanModel): FileSpec {
         val typeBuilder = TypeSpec.classBuilder(holder.generatedClazzSimpleName).addModifiers(holder.classVisibility).superclass(
-            ClassName(holder.`package`, holder.sourceClazzSimpleName)
+            ClassName(holder.`package`, holder.sourceClazzSimpleName),
         ).addSuperinterface(TypeUtil.activityRefered()).addSuperinterface(TypeUtil.beanScope())
             .primaryConstructor(FunSpec.constructorBuilder().addParameter("pscope", TypeUtil.scope()).build())
             .addProperty(PropertySpec.builder("activityRef", TypeUtil.nullableString(), KModifier.PUBLIC, KModifier.OVERRIDE).mutable().initializer("null").build())

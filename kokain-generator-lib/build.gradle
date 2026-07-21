@@ -5,6 +5,10 @@ apply plugin: 'pmd'
 apply plugin: 'kotlin-kapt'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 
+kotlin {
+    jvmToolchain(17)
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -32,16 +36,15 @@ jacocoTestReport {
     }
 }
 
-targetCompatibility = JavaVersion.VERSION_17
-sourceCompatibility = JavaVersion.VERSION_17
-
 java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
     withSourcesJar()
     withJavadocJar()
 }
 
 dependencies {
-    implementation 'com.squareup:kotlinpoet:1.15.3'
+    implementation 'com.squareup:kotlinpoet:2.3.0'
     api project(path: ':kokain-core-api', configuration: 'default')
     implementation 'org.apache.commons:commons-lang3:3.4'
 }
